@@ -116,28 +116,12 @@ app.post('/api/signup', async (req, res) => {
             return res.status(400).json({ error: 'Email and password are required' });
         }
         
-        let useFileSystem = false;
-        let existingUser = null;
+        // Always use file-based storage for now since Supabase tables aren't set up
+        console.log('Using file-based storage for signup');
         
-        // Try Supabase first
-        try {
-            const { data } = await supabase
-                .from('users')
-                .select('id')
-                .eq('email', email)
-                .single();
-            existingUser = data;
-        } catch (supabaseError) {
-            console.log('Supabase not available, using file-based storage');
-            useFileSystem = true;
-            // Check file-based storage
-            const users = readJSONFile('./data/users.json');
-            if (users.users && users.users[email]) {
-                existingUser = users.users[email];
-            }
-        }
-            
-        if (existingUser) {
+        // Check file-based storage for existing user
+        const users = readJSONFile('./data/users.json');
+        if (users.users && users.users[email]) {
             return res.status(400).json({ error: 'User already exists' });
         }
         
@@ -145,47 +129,28 @@ app.post('/api/signup', async (req, res) => {
         const hashedPassword = await bcrypt.hash(password, 12);
         const userId = uuidv4();
         
-        if (useFileSystem) {
-            // Use file-based storage
-            const users = readJSONFile('./data/users.json');
-            if (!users.users) users.users = {};
-            
-            users.users[email] = {
-                id: userId,
-                email,
-                password: hashedPassword,
-                createdAt: new Date().toISOString()
-            };
-            
-            writeJSONFile('./data/users.json', users);
-            
-            res.json({ 
-                success: true, 
-                userId: userId, 
-                email: email 
-            });
-        } else {
-            // Use Supabase
-            const { data: user, error } = await supabase
-                .from('users')
-                .insert([{
-                    email,
-                    password: hashedPassword
-                }])
-                .select('id, email, created_at')
-                .single();
-                
-            if (error) {
-                console.error('Database error:', error);
-                return res.status(500).json({ error: 'Error creating user' });
-            }
-            
-            res.json({ 
-                success: true, 
-                userId: user.id, 
-                email: user.email 
-            });
+        // Use file-based storage
+        if (!users.users) users.users = {};
+        
+        users.users[email] = {
+            id: userId,
+            email,
+            password: hashedPassword,
+            createdAt: new Date().toISOString()
+        };
+        
+        const writeSuccess = writeJSONFile('./data/users.json', users);
+        
+        if (!writeSuccess) {
+            return res.status(500).json({ error: 'Failed to save user data' });
         }
+        
+        res.json({ 
+            success: true, 
+            userId: userId, 
+            email: email 
+        });
+        
     } catch (error) {
         console.error('Signup error:', error);
         res.status(500).json({ error: 'Internal server error' });
@@ -200,30 +165,12 @@ app.post('/api/signin', async (req, res) => {
             return res.status(400).json({ error: 'Email and password are required' });
         }
         
-        let user = null;
-        let useFileSystem = false;
+        // Always use file-based storage for now since Supabase tables aren't set up
+        console.log('Using file-based storage for signin');
         
-        // Try Supabase first
-        try {
-            const { data, error } = await supabase
-                .from('users')
-                .select('id, email, password')
-                .eq('email', email)
-                .single();
-            if (!error && data) {
-                user = data;
-            } else {
-                throw new Error('Supabase query failed');
-            }
-        } catch (supabaseError) {
-            console.log('Supabase not available, using file-based storage');
-            useFileSystem = true;
-            // Check file-based storage
-            const users = readJSONFile('./data/users.json');
-            if (users.users && users.users[email]) {
-                user = users.users[email];
-            }
-        }
+        // Check file-based storage
+        const users = readJSONFile('./data/users.json');
+        const user = users.users && users.users[email];
             
         if (!user) {
             return res.status(400).json({ error: 'Invalid credentials' });
@@ -235,19 +182,21 @@ app.post('/api/signin', async (req, res) => {
             return res.status(400).json({ error: 'Invalid credentials' });
         }
         
-        // For now, we'll use a simple session token approach
+        // Generate session token
         const sessionToken = uuidv4();
         
-        // Store session in file-based storage for consistency
-        if (useFileSystem) {
-            const users = readJSONFile('./data/users.json');
-            if (!users.sessions) users.sessions = {};
-            users.sessions[sessionToken] = {
-                userId: user.id,
-                email: user.email,
-                createdAt: new Date().toISOString()
-            };
-            writeJSONFile('./data/users.json', users);
+        // Store session in file-based storage
+        if (!users.sessions) users.sessions = {};
+        users.sessions[sessionToken] = {
+            userId: user.id,
+            email: user.email,
+            createdAt: new Date().toISOString()
+        };
+        
+        const writeSuccess = writeJSONFile('./data/users.json', users);
+        
+        if (!writeSuccess) {
+            console.error('Failed to save session data');
         }
         
         res.json({ 
