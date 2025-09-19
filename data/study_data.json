@@ -38,6 +38,15 @@
       "videoUrl": "https://www.youtube.com/watch?v=O6P86uwfdR0",
       "subjectId": "9b64b9a4-9cc0-41f0-9222-6ff2fccc12bb",
       "createdAt": "2025-09-19T11:47:41.979Z"
+    },
+    "4decad7d-4e32-4546-a120-b260fae56b5d": {
+      "id": "4decad7d-4e32-4546-a120-b260fae56b5d",
+      "userId": "736666e3-97a0-48f0-8a12-6e8a2b4e110e",
+      "title": "Veritas",
+      "content": "lalal",
+      "videoUrl": "https://youtu.be/A5w-dEgIU1M?si=q68vDMG4O_vnF8OE",
+      "subjectId": "ddb97176-4708-4c1c-b46a-b8c0d770c582",
+      "createdAt": "2025-09-19T12:17:05.168Z"
     }
   }
 }

@@ -36,19 +36,19 @@
         }
         
         .bg-blue-50 {
-            background: var(--very-light-gray) !important;
+            background: var(--dark-green) !important;
         }
         
         .from-blue-50 {
-            background: var(--very-light-gray) !important;
+            background: var(--dark-green) !important;
         }
         
         .to-indigo-100 {
-            background: var(--very-light-gray) !important;
+            background: var(--dark-green) !important;
         }
         
         .bg-white {
-            background-color: #1a201a !important;
+            background-color: var(--dark-green) !important;
             border: 1px solid var(--gray) !important;
         }
         
@@ -145,7 +145,7 @@
         }
         
         .hover\\:bg-blue-700:hover {
-            background-color: #a3010f !important;
+            background-color: rgba(194, 1, 20, 0.85) !important;
         }
         
         .hover\\:bg-gray-100:hover {
@@ -169,7 +169,7 @@
         }
         
         .focus\\:ring-blue-500:focus {
-            ring-color: var(--red) !important;
+            box-shadow: 0 0 0 2px rgba(194, 1, 20, 0.2) !important;
         }
         
         .focus\\:border-blue-500:focus {
@@ -237,8 +237,49 @@
             box-shadow: 0 0 0 2px rgba(194, 1, 20, 0.2) !important;
         }
         
+        /* Dark theme overrides - remove all white/light backgrounds */
+        .bg-black {
+            background-color: rgba(12, 18, 12, 0.8) !important;
+        }
+        .bg-gray-50 {
+            background-color: var(--dark-green) !important;
+        }
+        
+        .bg-gray-100 {
+            background-color: rgba(123, 128, 133, 0.1) !important;
+        }
+        
+        .bg-indigo-50 {
+            background-color: var(--dark-green) !important;
+        }
+        
+        /* Text color adjustments for dark theme */
+        .text-white {
+            color: var(--very-light-gray) !important;
+        }
+        
+        .text-black {
+            color: var(--light-gray) !important;
+        }
+        
+        /* Card and modal backgrounds */
+        .rounded-lg, .rounded-xl {
+            background-color: var(--dark-green);
+            border: 1px solid var(--gray);
+        }
+        
+        /* Additional background overrides */
+        .min-h-screen {
+            background: var(--dark-green) !important;
+        }
+        
+        /* Remove any remaining light backgrounds */
+        div[class*="bg-"] {
+            color: var(--light-gray);
+        }
+        
         input, textarea, select {
-            background-color: #1a201a !important;
+            background-color: var(--dark-green) !important;
             border-color: var(--gray) !important;
             color: var(--light-gray) !important;
             font-family: 'Space Mono', monospace !important;
@@ -679,10 +720,18 @@
             const SubjectForm = ({ subject, onSubmit, onCancel }) => {
                 const [formData, setFormData] = useState({
                     name: subject?.name || '',
-                    color: subject?.color || '#3b82f6',
+                    color: subject?.color || '#C20114',
                     goal: subject?.goal || 60,
                     description: subject?.description || ''
                 });
+                
+                const colorOptions = [
+                    { value: '#C20114', name: 'Red' },
+                    { value: '#7B8085', name: 'Gray' },
+                    { value: '#C7D0D6', name: 'Light Gray' },
+                    { value: '#ECEFF2', name: 'Very Light Gray' },
+                    { value: '#0C120C', name: 'Dark Green' }
+                ];
 
                 const handleSubmit = () => {
                     if (formData.name.trim()) {
@@ -706,12 +755,30 @@
                                 </div>
                                 <div>
                                     <label className="block text-sm font-medium mb-1">Color</label>
-                                    <input
-                                        type="color"
+                                    <select
                                         value={formData.color}
                                         onChange={(e) => setFormData({...formData, color: e.target.value})}
-                                        className="w-full h-10 border rounded-lg cursor-pointer"
-                                    />
+                                        className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                    >
+                                        {colorOptions.map(option => (
+                                            <option key={option.value} value={option.value}>
+                                                {option.name}
+                                            </option>
+                                        ))}
+                                    </select>
+                                    <div className="mt-2 flex gap-2">
+                                        {colorOptions.map(option => (
+                                            <div
+                                                key={option.value}
+                                                className={`w-6 h-6 rounded border-2 cursor-pointer ${
+                                                    formData.color === option.value ? 'border-red-500' : 'border-gray-300'
+                                                }`}
+                                                style={{ backgroundColor: option.value }}
+                                                onClick={() => setFormData({...formData, color: option.value})}
+                                                title={option.name}
+                                            />
+                                        ))}
+                                    </div>
                                 </div>
                                 <div>
                                     <label className="block text-sm font-medium mb-1">Daily Goal (minutes)</label>
