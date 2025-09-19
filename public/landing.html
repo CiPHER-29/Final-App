@@ -10,11 +10,14 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.23.5/babel.min.js"></script>
     <style>
         :root {
-            --dark-green: #0C120C;
-            --red: #C20114;
-            --gray: #7B8085;
-            --light-gray: #C7D0D6;
-            --very-light-gray: #ECEFF2;
+            --primary-dark: #0F141A;
+            --secondary-dark: #181C1F;
+            --tertiary-dark: #232932;
+            --accent-blue: #00B7FF;
+            --light-blue: #7AC3FF;
+            --medium-gray: #AFC2CD;
+            --light-gray: #E5EFF7;
+            --white: #FCFCFC;
         }
         
         * {
@@ -27,13 +30,13 @@
             font-family: 'Space Mono', monospace;
             line-height: 1.6;
             color: var(--light-gray);
-            background: var(--dark-green);
+            background: var(--primary-dark);
             overflow-x: hidden;
         }
         
         .hero {
             min-height: 100vh;
-            background: linear-gradient(135deg, var(--dark-green) 0%, #1a1f1a 100%);
+            background: linear-gradient(135deg, var(--primary-dark) 0%, var(--secondary-dark) 100%);
             display: flex;
             align-items: center;
             position: relative;
@@ -46,8 +49,8 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: radial-gradient(circle at 20% 20%, rgba(194, 1, 20, 0.2) 0%, transparent 50%),
-                        radial-gradient(circle at 80% 80%, rgba(123, 128, 133, 0.1) 0%, transparent 50%);
+            background: radial-gradient(circle at 20% 20%, rgba(0, 183, 255, 0.2) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 80%, rgba(35, 41, 50, 0.3) 0%, transparent 50%);
         }
         
         .container {
@@ -66,20 +69,20 @@
         .hero h1 {
             font-size: 3.5rem;
             font-weight: 700;
-            color: var(--very-light-gray);
+            color: var(--white);
             margin-bottom: 1rem;
             letter-spacing: -0.01em;
             font-family: 'Space Mono', monospace;
         }
         
         .hero .highlight {
-            color: var(--red);
+            color: var(--accent-blue);
             font-weight: 700;
         }
         
         .hero p {
             font-size: 1.3rem;
-            color: var(--light-gray);
+            color: var(--medium-gray);
             margin-bottom: 3rem;
             max-width: 700px;
             margin-left: auto;
@@ -114,32 +117,32 @@
         }
         
         .btn-primary {
-            background: var(--red);
-            color: white;
+            background: var(--accent-blue);
+            color: var(--white);
         }
         
         .btn-primary:hover {
-            background: #a40111;
+            background: var(--light-blue);
             transform: translateY(-2px);
-            box-shadow: 0 10px 25px rgba(194, 1, 20, 0.3);
+            box-shadow: 0 10px 25px rgba(0, 183, 255, 0.3);
         }
         
         .btn-secondary {
             background: transparent;
             color: var(--light-gray);
-            border: 2px solid var(--gray);
+            border: 2px solid var(--medium-gray);
         }
         
         .btn-secondary:hover {
-            background: var(--gray);
-            color: var(--very-light-gray);
+            background: var(--medium-gray);
+            color: var(--white);
             transform: translateY(-2px);
-            box-shadow: 0 10px 25px rgba(123, 128, 133, 0.3);
+            box-shadow: 0 10px 25px rgba(175, 194, 205, 0.3);
         }
         
         .features {
             padding: 6rem 0;
-            background: #1a1f1a;
+            background: var(--secondary-dark);
         }
         
         .features-grid {
@@ -163,26 +166,26 @@
         .feature-icon {
             width: 80px;
             height: 80px;
-            background: var(--gray);
+            background: var(--tertiary-dark);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             margin: 0 auto 2rem;
-            color: var(--red);
+            color: var(--accent-blue);
             font-size: 2rem;
         }
         
         .feature h3 {
             font-size: 1.5rem;
             margin-bottom: 1rem;
-            color: var(--very-light-gray);
+            color: var(--white);
             font-weight: 700;
             font-family: 'Space Mono', monospace;
         }
         
         .feature p {
-            color: var(--light-gray);
+            color: var(--medium-gray);
             font-size: 1.1rem;
             line-height: 1.8;
         }
@@ -191,7 +194,7 @@
             text-align: center;
             font-size: 2.8rem;
             font-weight: 700;
-            color: var(--very-light-gray);
+            color: var(--white);
             margin-bottom: 1rem;
             font-family: 'Space Mono', monospace;
         }
@@ -199,7 +202,7 @@
         .section-subtitle {
             text-align: center;
             font-size: 1.3rem;
-            color: var(--light-gray);
+            color: var(--medium-gray);
             max-width: 600px;
             margin: 0 auto;
         }
@@ -210,7 +213,7 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: rgba(12, 18, 12, 0.8);
+            background: rgba(15, 20, 26, 0.8);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -226,8 +229,8 @@
         }
         
         .auth-modal-content {
-            background: #1a1f1a;
-            border: 1px solid var(--gray);
+            background: var(--secondary-dark);
+            border: 1px solid var(--tertiary-dark);
             border-radius: 20px;
             padding: 3rem;
             width: 90%;
@@ -244,7 +247,7 @@
         .auth-modal h2 {
             font-size: 2rem;
             font-weight: 400;
-            color: var(--very-light-gray);
+            color: var(--white);
             margin-bottom: 2rem;
         }
         
@@ -256,28 +259,28 @@
         .form-group label {
             display: block;
             margin-bottom: 0.5rem;
-            color: var(--very-light-gray);
+            color: var(--white);
             font-weight: 500;
         }
         
         .form-group input {
             width: 100%;
             padding: 1rem;
-            border: 2px solid var(--gray);
+            border: 2px solid var(--tertiary-dark);
             border-radius: 10px;
             font-size: 1rem;
             transition: border-color 0.3s ease;
-            background: var(--dark-green);
-            color: var(--very-light-gray);
+            background: var(--primary-dark);
+            color: var(--white);
         }
         
         .form-group input:focus {
             outline: none;
-            border-color: var(--red);
+            border-color: var(--accent-blue);
         }
         
         .form-group input::placeholder {
-            color: var(--gray);
+            color: var(--medium-gray);
         }
         
         .auth-buttons {
@@ -293,13 +296,13 @@
             background: none;
             border: none;
             font-size: 2rem;
-            color: var(--light-gray);
+            color: var(--medium-gray);
             cursor: pointer;
             transition: color 0.3s ease;
         }
         
         .close-modal:hover {
-            color: var(--red);
+            color: var(--accent-blue);
         }
         
         @keyframes fadeInUp {
@@ -541,7 +544,7 @@
                             
                             <form onSubmit={handleAuthSubmit}>
                                 {message && (
-                                    <div style={{padding: '1rem', marginBottom: '1rem', borderRadius: '10px', backgroundColor: message.includes('error') || message.includes('do not match') ? 'var(--red)' : 'var(--gray)', color: 'var(--very-light-gray)', textAlign: 'center'}}>
+                                    <div style={{padding: '1rem', marginBottom: '1rem', borderRadius: '10px', backgroundColor: message.includes('error') || message.includes('do not match') ? 'var(--accent-blue)' : 'var(--tertiary-dark)', color: 'var(--white)', textAlign: 'center'}}>
                                         {message}
                                     </div>
                                 )}
@@ -570,7 +573,7 @@
                             <p style={{marginTop: '2rem', color: 'var(--light-gray)'}}>
                                 {authMode === 'signin' ? "Don't have an account? " : "Already have an account? "}
                                 <button 
-                                    style={{background: 'none', border: 'none', color: 'var(--red)', cursor: 'pointer', textDecoration: 'underline'}}
+                                    style={{background: 'none', border: 'none', color: 'var(--accent-blue)', cursor: 'pointer', textDecoration: 'underline'}}
                                     onClick={() => setAuthMode(authMode === 'signin' ? 'signup' : 'signin')}
                                 >
                                     {authMode === 'signin' ? 'Sign Up' : 'Sign In'}
