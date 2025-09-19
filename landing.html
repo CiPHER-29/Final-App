@@ -7,6 +7,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.development.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.development.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.23.5/babel.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <style>
         :root {
             --dark-green: #0C120C;
@@ -25,13 +26,14 @@
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
             line-height: 1.6;
-            color: var(--dark-green);
+            color: var(--light-gray);
+            background: var(--dark-green);
             overflow-x: hidden;
         }
         
         .hero {
             min-height: 100vh;
-            background: linear-gradient(135deg, var(--very-light-gray) 0%, var(--light-gray) 100%);
+            background: linear-gradient(135deg, var(--dark-green) 0%, #1a1f1a 100%);
             display: flex;
             align-items: center;
             position: relative;
@@ -44,8 +46,8 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: radial-gradient(circle at 20% 20%, rgba(194, 1, 20, 0.1) 0%, transparent 50%),
-                        radial-gradient(circle at 80% 80%, rgba(12, 18, 12, 0.05) 0%, transparent 50%);
+            background: radial-gradient(circle at 20% 20%, rgba(194, 1, 20, 0.2) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 80%, rgba(123, 128, 133, 0.1) 0%, transparent 50%);
         }
         
         .container {
@@ -64,7 +66,7 @@
         .hero h1 {
             font-size: 4rem;
             font-weight: 300;
-            color: var(--dark-green);
+            color: var(--very-light-gray);
             margin-bottom: 1rem;
             letter-spacing: -0.02em;
         }
@@ -76,7 +78,7 @@
         
         .hero p {
             font-size: 1.5rem;
-            color: var(--gray);
+            color: var(--light-gray);
             margin-bottom: 3rem;
             max-width: 600px;
             margin-left: auto;
@@ -118,20 +120,20 @@
         
         .btn-secondary {
             background: transparent;
-            color: var(--dark-green);
+            color: var(--light-gray);
             border: 2px solid var(--gray);
         }
         
         .btn-secondary:hover {
-            background: var(--dark-green);
-            color: white;
+            background: var(--gray);
+            color: var(--very-light-gray);
             transform: translateY(-2px);
-            box-shadow: 0 10px 25px rgba(12, 18, 12, 0.2);
+            box-shadow: 0 10px 25px rgba(123, 128, 133, 0.3);
         }
         
         .features {
             padding: 6rem 0;
-            background: white;
+            background: #1a1f1a;
         }
         
         .features-grid {
@@ -155,7 +157,7 @@
         .feature-icon {
             width: 80px;
             height: 80px;
-            background: var(--very-light-gray);
+            background: var(--gray);
             border-radius: 50%;
             display: flex;
             align-items: center;
@@ -168,12 +170,12 @@
         .feature h3 {
             font-size: 1.5rem;
             margin-bottom: 1rem;
-            color: var(--dark-green);
+            color: var(--very-light-gray);
             font-weight: 400;
         }
         
         .feature p {
-            color: var(--gray);
+            color: var(--light-gray);
             font-size: 1.1rem;
             line-height: 1.8;
         }
@@ -182,14 +184,14 @@
             text-align: center;
             font-size: 3rem;
             font-weight: 300;
-            color: var(--dark-green);
+            color: var(--very-light-gray);
             margin-bottom: 1rem;
         }
         
         .section-subtitle {
             text-align: center;
             font-size: 1.3rem;
-            color: var(--gray);
+            color: var(--light-gray);
             max-width: 600px;
             margin: 0 auto;
         }
@@ -216,7 +218,8 @@
         }
         
         .auth-modal-content {
-            background: white;
+            background: #1a1f1a;
+            border: 1px solid var(--gray);
             border-radius: 20px;
             padding: 3rem;
             width: 90%;
@@ -233,7 +236,7 @@
         .auth-modal h2 {
             font-size: 2rem;
             font-weight: 400;
-            color: var(--dark-green);
+            color: var(--very-light-gray);
             margin-bottom: 2rem;
         }
         
@@ -245,23 +248,28 @@
         .form-group label {
             display: block;
             margin-bottom: 0.5rem;
-            color: var(--dark-green);
+            color: var(--very-light-gray);
             font-weight: 500;
         }
         
         .form-group input {
             width: 100%;
             padding: 1rem;
-            border: 2px solid var(--light-gray);
+            border: 2px solid var(--gray);
             border-radius: 10px;
             font-size: 1rem;
             transition: border-color 0.3s ease;
-            background: var(--very-light-gray);
+            background: var(--dark-green);
+            color: var(--very-light-gray);
         }
         
         .form-group input:focus {
             outline: none;
             border-color: var(--red);
+        }
+        
+        .form-group input::placeholder {
+            color: var(--gray);
         }
         
         .auth-buttons {
@@ -277,7 +285,7 @@
             background: none;
             border: none;
             font-size: 2rem;
-            color: var(--gray);
+            color: var(--light-gray);
             cursor: pointer;
             transition: color 0.3s ease;
         }
@@ -440,7 +448,7 @@
                                 </div>
                             </form>
                             
-                            <p style={{marginTop: '2rem', color: 'var(--gray)'}}>
+                            <p style={{marginTop: '2rem', color: 'var(--light-gray)'}}>
                                 {authMode === 'signin' ? "Don't have an account? " : "Already have an account? "}
                                 <button 
                                     style={{background: 'none', border: 'none', color: 'var(--red)', cursor: 'pointer', textDecoration: 'underline'}}
