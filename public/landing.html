@@ -8,7 +8,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.development.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.development.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.23.5/babel.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
     <style>
         :root {
             --dark-green: #0C120C;
@@ -353,20 +353,38 @@
         // Initialize Supabase client
         let supabase = null;
         
-        // Fetch Supabase configuration from server
-        fetch('/api/supabase-config')
-            .then(response => response.json())
-            .then(config => {
+        // Wait for Supabase library to load and initialize client
+        const initSupabase = async () => {
+            // Wait for window.supabase to be available
+            let attempts = 0;
+            while (!window.supabase && attempts < 50) {
+                await new Promise(resolve => setTimeout(resolve, 100));
+                attempts++;
+            }
+            
+            if (!window.supabase) {
+                console.error('Supabase library failed to load');
+                return;
+            }
+            
+            try {
+                const response = await fetch('/api/supabase-config');
+                const config = await response.json();
                 supabase = window.supabase.createClient(config.url, config.key);
-            })
-            .catch(error => {
+                console.log('Supabase client initialized successfully');
+            } catch (error) {
                 console.error('Failed to load Supabase config:', error);
                 // Fallback configuration
                 supabase = window.supabase.createClient(
                     'https://ixpemzhkbewagfjwctlv.supabase.co',
                     'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Iml4cGVtemhrYmV3YWdmandjdGx2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTgyNzA0NjMsImV4cCI6MjA3Mzg0NjQ2M30.Qsqsp1ez82eyKUDMVldEGsHWIzIx1BhvwdQwBZUf_2M'
                 );
-            });
+                console.log('Supabase client initialized with fallback config');
+            }
+        };
+        
+        // Initialize on load
+        initSupabase();
 
         const LandingPage = () => {
             const [showAuthModal, setShowAuthModal] = useState(false);
