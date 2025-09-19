@@ -1025,14 +1025,14 @@
                                 {/* Calendar Widget */}
                                 <div className="bg-blue-50 rounded-lg p-4 border border-blue-200">
                                     <div className="flex items-center gap-3 text-center">
-                                        <div className="text-white font-bold text-lg">
-                                            {new Date().toLocaleDateString('en-US', { weekday: 'short' })}
+                                        <div className="text-white text-sm">
+                                            {new Date().toLocaleDateString('en-US', { month: 'short' })}
                                         </div>
                                         <div className="text-white font-bold text-2xl">
                                             {new Date().getDate()}
                                         </div>
-                                        <div className="text-white text-sm">
-                                            {new Date().toLocaleDateString('en-US', { month: 'short' })}
+                                        <div className="text-white font-bold text-lg">
+                                            {new Date().toLocaleDateString('en-US', { weekday: 'short' })}
                                         </div>
                                     </div>
                                 </div>
