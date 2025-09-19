@@ -25,19 +25,19 @@ Preferred communication style: Simple, everyday language.
 
 ### Backend Architecture
 - **Server**: Express.js server providing static file serving and API endpoints
-- **Configuration Management**: Environment variable-based configuration for external services
-- **API Endpoints**: RESTful endpoints for Supabase configuration delivery
+- **Configuration Management**: Environment variable-based configuration
+- **API Endpoints**: RESTful endpoints for user authentication and study data management
 - **Static File Serving**: Public directory structure for organized asset delivery
 
 ### Data Storage Strategy
 - **Local State**: React state for real-time application data (subjects, sessions, timers)
-- **External Database**: Supabase integration prepared for persistent data storage
+- **File-based Storage**: JSON files for persistent data storage (users.json, study_data.json)
 - **Session Management**: In-memory tracking of active study sessions and timers
 
 ### Authentication & Authorization
-- **Supabase Auth**: Integration prepared for user authentication and session management
-- **Environment Security**: API keys and sensitive configuration stored in environment variables
-- **Public Access**: Current implementation allows public access to core functionality
+- **Custom Authentication**: Built-in user authentication system with password hashing
+- **Session Management**: Token-based user sessions stored locally
+- **Password Security**: BCrypt password hashing for secure user authentication
 
 ## External Dependencies
 
@@ -48,10 +48,10 @@ Preferred communication style: Simple, everyday language.
 - **Tailwind CSS**: Utility-first CSS framework via CDN
 
 ### Backend Services
-- **Supabase**: Backend-as-a-Service for database, authentication, and real-time features
-  - Database URL: Configurable via environment variables
-  - Anonymous key authentication for public access
-  - Real-time subscriptions capability
+- **Express.js**: Web server framework for handling HTTP requests and API endpoints
+- **BCrypt**: Password hashing library for secure user authentication
+- **UUID**: Unique identifier generation for users and data records
+- **File System**: JSON-based data storage for user accounts and study data
 
 ### Development Dependencies
 - **Express.js**: Web server framework
