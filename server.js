@@ -264,6 +264,102 @@ app.post('/api/video-notes', (req, res) => {
     }
 });
 
+// Delete subject endpoint
+app.delete('/api/subjects/:subjectId', (req, res) => {
+    try {
+        const { subjectId } = req.params;
+        const sessionToken = req.headers['x-session-token'];
+        
+        if (!sessionToken) {
+            return res.status(401).json({ error: 'Authentication required' });
+        }
+        
+        // Verify session and get user
+        const users = readJSONFile('./data/users.json');
+        const session = users.sessions && users.sessions[sessionToken];
+        
+        if (!session) {
+            return res.status(401).json({ error: 'Invalid session' });
+        }
+        
+        const studyData = readJSONFile('./data/study_data.json');
+        
+        // Check if subject exists and belongs to the user
+        if (studyData.subjects && studyData.subjects[subjectId]) {
+            if (studyData.subjects[subjectId].userId !== session.userId) {
+                return res.status(403).json({ error: 'Not authorized to delete this subject' });
+            }
+            
+            // Delete the subject
+            delete studyData.subjects[subjectId];
+            
+            // Also delete all sessions associated with this subject
+            if (studyData.study_sessions) {
+                for (const sessionId in studyData.study_sessions) {
+                    if (studyData.study_sessions[sessionId].subjectId === subjectId) {
+                        delete studyData.study_sessions[sessionId];
+                    }
+                }
+            }
+            
+            // Also delete all video notes associated with this subject
+            if (studyData.video_notes) {
+                for (const noteId in studyData.video_notes) {
+                    if (studyData.video_notes[noteId].subjectId === subjectId) {
+                        delete studyData.video_notes[noteId];
+                    }
+                }
+            }
+            
+            writeJSONFile('./data/study_data.json', studyData);
+            res.json({ success: true });
+        } else {
+            res.status(404).json({ error: 'Subject not found' });
+        }
+    } catch (error) {
+        console.error('Delete subject error:', error);
+        res.status(500).json({ error: 'Internal server error' });
+    }
+});
+
+// Delete session endpoint
+app.delete('/api/sessions/:sessionId', (req, res) => {
+    try {
+        const { sessionId } = req.params;
+        const sessionToken = req.headers['x-session-token'];
+        
+        if (!sessionToken) {
+            return res.status(401).json({ error: 'Authentication required' });
+        }
+        
+        // Verify session and get user
+        const users = readJSONFile('./data/users.json');
+        const session = users.sessions && users.sessions[sessionToken];
+        
+        if (!session) {
+            return res.status(401).json({ error: 'Invalid session' });
+        }
+        
+        const studyData = readJSONFile('./data/study_data.json');
+        
+        // Check if session exists and belongs to the user
+        if (studyData.study_sessions && studyData.study_sessions[sessionId]) {
+            if (studyData.study_sessions[sessionId].userId !== session.userId) {
+                return res.status(403).json({ error: 'Not authorized to delete this session' });
+            }
+            
+            delete studyData.study_sessions[sessionId];
+            writeJSONFile('./data/study_data.json', studyData);
+            res.json({ success: true });
+        } else {
+            res.status(404).json({ error: 'Session not found' });
+        }
+    } catch (error) {
+        console.error('Delete session error:', error);
+        res.status(500).json({ error: 'Internal server error' });
+    }
+});
+
 app.delete('/api/video-notes/:noteId', (req, res) => {
     try {
         const { noteId } = req.params;
