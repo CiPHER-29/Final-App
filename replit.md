@@ -18,7 +18,7 @@ Preferred communication style: Simple, everyday language.
 - **Icons**: Custom SVG icon components for consistent visual design
 
 ### Component Structure
-- **Main Application**: Single-page application (`complete_study_tracker.html`) containing the full study tracker functionality
+- **Main Application**: Single-page application (`complete_study_tracker.html`) containing the full Study GPS functionality
 - **Landing Page**: Marketing/welcome page (`landing.html`) with hero section and call-to-action
 - **Modular Components**: Icon components separated into reusable modules
 - **Timer System**: Real-time study session tracking with pause/resume functionality
