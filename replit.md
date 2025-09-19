@@ -72,7 +72,9 @@ Preferred communication style: Simple, everyday language.
 
 ## Recent Changes
 - **September 19, 2025**: Successfully imported from GitHub and configured for Replit environment
-  - Installed all Node.js dependencies (express, bcryptjs, dotenv, uuid)  
-  - Verified server startup and both landing page and main app functionality
-  - Configured deployment settings for autoscale production deployment
+  - Installed all Node.js dependencies (express, bcryptjs, dotenv, uuid, @supabase/supabase-js)  
+  - Fixed environment variable configuration to support both SUPABASE_ and VITE_SUPABASE_ prefixes
+  - Verified server startup and both landing page and main app functionality working correctly
+  - Configured deployment settings for autoscale production deployment using npm start
   - Server running successfully on http://0.0.0.0:5000 with existing user data intact
+  - Hybrid data storage system operational (Supabase + file-based fallback)
