@@ -1735,10 +1735,10 @@
 
                                             {/* Recent Activity and Trends */}
                                             <div className="grid lg:grid-cols-2 gap-6 mb-8">
-                                                <div className="bg-gray-200 border rounded-xl p-6" style={{backgroundColor: 'var(--medium-gray)', color: 'black'}}>
+                                                <div className="bg-white border rounded-xl p-6">
                                                     <div className="flex items-center gap-3 mb-6">
-                                                        <Activity className="w-6 h-6" style={{color: 'black'}} />
-                                                        <h3 className="text-xl font-semibold" style={{color: 'black'}}>Weekly Activity</h3>
+                                                        <Activity className="w-6 h-6 text-purple-600" />
+                                                        <h3 className="text-xl font-semibold text-gray-900">Weekly Activity</h3>
                                                     </div>
 
                                                     <div className="space-y-3">
@@ -1756,7 +1756,7 @@
 
                                                             return (
                                                                 <div key={dateStr} className="flex items-center gap-4">
-                                                                    <div className="w-12 text-sm font-medium" style={{color: 'black'}}>
+                                                                    <div className="w-12 text-sm font-medium text-gray-600">
                                                                         {dayName}
                                                                     </div>
                                                                     <div className="flex-1">
@@ -1773,7 +1773,7 @@
                                                                             </div>
                                                                         </div>
                                                                     </div>
-                                                                    <div className="w-16 text-right text-sm" style={{color: 'black'}}>
+                                                                    <div className="w-16 text-right text-sm text-gray-500">
                                                                         {date.getDate()}/{date.getMonth() + 1}
                                                                     </div>
                                                                 </div>
@@ -1782,19 +1782,19 @@
                                                     </div>
                                                 </div>
 
-                                                <div className="bg-gray-200 border rounded-xl p-6" style={{backgroundColor: 'var(--medium-gray)', color: 'black'}}>
+                                                <div className="bg-white border rounded-xl p-6">
                                                     <div className="flex items-center gap-3 mb-6">
-                                                        <TrendingUp className="w-6 h-6" style={{color: 'black'}} />
-                                                        <h3 className="text-xl font-semibold" style={{color: 'black'}}>Study Insights</h3>
+                                                        <TrendingUp className="w-6 h-6 text-orange-600" />
+                                                        <h3 className="text-xl font-semibold text-gray-900">Study Insights</h3>
                                                     </div>
 
                                                     <div className="space-y-4">
-                                                        <div className="p-4 bg-gray-100 rounded-lg" style={{backgroundColor: 'rgba(175, 194, 205, 0.3)'}}>
+                                                        <div className="p-4 bg-blue-50 rounded-lg">
                                                             <div className="flex items-center gap-2 mb-2">
-                                                                <Clock className="w-4 h-4" style={{color: 'black'}} />
-                                                                <span className="font-medium" style={{color: 'black'}}>Most Productive Subject</span>
+                                                                <Clock className="w-4 h-4 text-blue-600" />
+                                                                <span className="font-medium text-blue-900">Most Productive Subject</span>
                                                             </div>
-                                                            <p style={{color: 'black'}}>
+                                                            <p className="text-blue-800">
                                                                 {(() => {
                                                                     const subjectTimes = subjects.map(subject => ({
                                                                         name: subject.name,
@@ -1810,12 +1810,12 @@
                                                             </p>
                                                         </div>
 
-                                                        <div className="p-4 bg-gray-100 rounded-lg" style={{backgroundColor: 'rgba(175, 194, 205, 0.3)'}}>
+                                                        <div className="p-4 bg-green-50 rounded-lg">
                                                             <div className="flex items-center gap-2 mb-2">
-                                                                <Target className="w-4 h-4" style={{color: 'black'}} />
-                                                                <span className="font-medium" style={{color: 'black'}}>Goals Achieved Today</span>
+                                                                <Target className="w-4 h-4 text-green-600" />
+                                                                <span className="font-medium text-green-900">Goals Achieved Today</span>
                                                             </div>
-                                                            <p style={{color: 'black'}}>
+                                                            <p className="text-green-800">
                                                                 {(() => {
                                                                     const today = new Date().toISOString().split('T')[0];
                                                                     const goalsAchieved = subjects.filter(subject => {
@@ -1829,12 +1829,12 @@
                                                             </p>
                                                         </div>
 
-                                                        <div className="p-4 bg-gray-100 rounded-lg" style={{backgroundColor: 'rgba(175, 194, 205, 0.3)'}}>
+                                                        <div className="p-4 bg-yellow-50 rounded-lg">
                                                             <div className="flex items-center gap-2 mb-2">
-                                                                <Award className="w-4 h-4" style={{color: 'black'}} />
-                                                                <span className="font-medium" style={{color: 'black'}}>Longest Session</span>
+                                                                <Award className="w-4 h-4 text-yellow-600" />
+                                                                <span className="font-medium text-yellow-900">Longest Session</span>
                                                             </div>
-                                                            <p style={{color: 'black'}}>
+                                                            <p className="text-yellow-800">
                                                                 {(() => {
                                                                     const longestSession = studySessions.reduce((max, current) => 
                                                                         current.duration > max.duration ? current : max, 
@@ -1848,12 +1848,12 @@
                                                             </p>
                                                         </div>
 
-                                                        <div className="p-4 bg-gray-100 rounded-lg" style={{backgroundColor: 'rgba(175, 194, 205, 0.3)'}}>
+                                                        <div className="p-4 bg-purple-50 rounded-lg">
                                                             <div className="flex items-center gap-2 mb-2">
-                                                                <Activity className="w-4 h-4" style={{color: 'black'}} />
-                                                                <span className="font-medium" style={{color: 'black'}}>Weekly Average</span>
+                                                                <Activity className="w-4 h-4 text-purple-600" />
+                                                                <span className="font-medium text-purple-900">Weekly Average</span>
                                                             </div>
-                                                            <p style={{color: 'black'}}>
+                                                            <p className="text-purple-800">
                                                                 {(() => {
                                                                     const weekStart = new Date();
                                                                     weekStart.setDate(weekStart.getDate() - 7);
