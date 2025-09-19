@@ -43,8 +43,14 @@ const writeJSONFile = (filePath, data) => {
     }
 };
 
-// Serve static files from public directory
-app.use(express.static('public'));
+// Serve static files from public directory with cache control
+app.use(express.static('public', {
+    setHeaders: (res, path) => {
+        res.set('Cache-Control', 'no-cache, no-store, must-revalidate');
+        res.set('Pragma', 'no-cache');
+        res.set('Expires', '0');
+    }
+}));
 
 // User authentication endpoints
 app.post('/api/signup', async (req, res) => {
