@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Study Tracker - Master Your Learning Journey</title>
+    <title>Study Tracker - Are You 1% Better Then Yesterday?</title>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.development.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.development.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.23.5/babel.min.js"></script>
@@ -24,7 +25,7 @@
         }
         
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+            font-family: 'Space Mono', monospace;
             line-height: 1.6;
             color: var(--light-gray);
             background: var(--dark-green);
@@ -64,11 +65,12 @@
         }
         
         .hero h1 {
-            font-size: 4rem;
-            font-weight: 300;
+            font-size: 3.5rem;
+            font-weight: 700;
             color: var(--very-light-gray);
             margin-bottom: 1rem;
-            letter-spacing: -0.02em;
+            letter-spacing: -0.01em;
+            font-family: 'Space Mono', monospace;
         }
         
         .hero .highlight {
@@ -77,13 +79,15 @@
         }
         
         .hero p {
-            font-size: 1.5rem;
+            font-size: 1.3rem;
             color: var(--light-gray);
             margin-bottom: 3rem;
-            max-width: 600px;
+            max-width: 700px;
             margin-left: auto;
             margin-right: auto;
-            font-weight: 300;
+            font-weight: 400;
+            font-style: italic;
+            font-family: 'Space Mono', monospace;
         }
         
         .cta-buttons {
@@ -99,12 +103,15 @@
             border: none;
             border-radius: 50px;
             font-size: 1.1rem;
-            font-weight: 500;
+            font-weight: 700;
             cursor: pointer;
             transition: all 0.3s ease;
             text-decoration: none;
             display: inline-block;
             min-width: 160px;
+            font-family: 'Space Mono', monospace;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
         }
         
         .btn-primary {
@@ -171,7 +178,8 @@
             font-size: 1.5rem;
             margin-bottom: 1rem;
             color: var(--very-light-gray);
-            font-weight: 400;
+            font-weight: 700;
+            font-family: 'Space Mono', monospace;
         }
         
         .feature p {
@@ -182,10 +190,11 @@
         
         .section-title {
             text-align: center;
-            font-size: 3rem;
-            font-weight: 300;
+            font-size: 2.8rem;
+            font-weight: 700;
             color: var(--very-light-gray);
             margin-bottom: 1rem;
+            font-family: 'Space Mono', monospace;
         }
         
         .section-subtitle {
@@ -307,11 +316,12 @@
         
         @media (max-width: 768px) {
             .hero h1 {
-                font-size: 2.5rem;
+                font-size: 2.2rem;
+                line-height: 1.2;
             }
             
             .hero p {
-                font-size: 1.2rem;
+                font-size: 1.1rem;
             }
             
             .cta-buttons {
@@ -326,6 +336,11 @@
             .container {
                 padding: 0 1rem;
             }
+            
+            .btn {
+                font-size: 1rem;
+                padding: 0.9rem 2rem;
+            }
         }
     </style>
 </head>
@@ -333,29 +348,103 @@
     <div id="root"></div>
 
     <script type="text/babel">
-        const { useState } = React;
+        const { useState, useEffect } = React;
+
+        // Initialize Supabase client
+        const supabaseUrl = window.location.hostname === 'localhost' || window.location.hostname.includes('.replit') ? 
+            '/api/supabase-config' : 'https://ixpemzhkbewagfjwctlv.supabase.co';
+        const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Iml4cGVtemhrYmV3YWdmandjdGx2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTgyNzA0NjMsImV4cCI6MjA3Mzg0NjQ2M30.Qsqsp1ez82eyKUDMVldEGsHWIzIx1BhvwdQwBZUf_2M';
+        const supabase = window.supabase.createClient('https://ixpemzhkbewagfjwctlv.supabase.co', supabaseKey);
 
         const LandingPage = () => {
             const [showAuthModal, setShowAuthModal] = useState(false);
             const [authMode, setAuthMode] = useState('signin'); // 'signin' or 'signup'
+            const [loading, setLoading] = useState(false);
+            const [message, setMessage] = useState('');
+            const [user, setUser] = useState(null);
+
+            useEffect(() => {
+                // Check if user is already signed in
+                supabase.auth.getSession().then(({ data: { session } }) => {
+                    setUser(session?.user ?? null);
+                    if (session?.user) {
+                        // User is signed in, redirect to app
+                        window.location.href = '/app';
+                    }
+                });
+
+                // Listen for auth changes
+                const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
+                    setUser(session?.user ?? null);
+                    if (event === 'SIGNED_IN') {
+                        window.location.href = '/app';
+                    }
+                });
+
+                return () => subscription.unsubscribe();
+            }, []);
 
             const openAuthModal = (mode) => {
                 setAuthMode(mode);
                 setShowAuthModal(true);
+                setMessage('');
             };
 
             const closeAuthModal = () => {
                 setShowAuthModal(false);
+                setMessage('');
             };
 
-            const handleAuthSubmit = (e) => {
+            const handleAuthSubmit = async (e) => {
                 e.preventDefault();
-                // TODO: Connect to Supabase authentication
-                console.log(`${authMode} form submitted`);
+                setLoading(true);
+                setMessage('');
+
+                const formData = new FormData(e.target);
+                const email = formData.get('email');
+                const password = formData.get('password');
+                const confirmPassword = formData.get('confirmPassword');
+
+                try {
+                    if (authMode === 'signup') {
+                        if (password !== confirmPassword) {
+                            setMessage('Passwords do not match');
+                            setLoading(false);
+                            return;
+                        }
+
+                        const { data, error } = await supabase.auth.signUp({
+                            email,
+                            password,
+                        });
+
+                        if (error) {
+                            setMessage(error.message);
+                        } else {
+                            setMessage('Check your email for the confirmation link!');
+                        }
+                    } else {
+                        const { data, error } = await supabase.auth.signInWithPassword({
+                            email,
+                            password,
+                        });
+
+                        if (error) {
+                            setMessage(error.message);
+                        } else {
+                            // Successful sign in will trigger the auth state change
+                            closeAuthModal();
+                        }
+                    }
+                } catch (error) {
+                    setMessage('An unexpected error occurred');
+                }
+
+                setLoading(false);
             };
 
             const goToApp = () => {
-                window.location.href = '/complete_study_tracker.html';
+                window.location.href = '/app';
             };
 
             return (
@@ -364,8 +453,8 @@
                     <section className="hero">
                         <div className="container">
                             <div className="hero-content">
-                                <h1>Master Your <span className="highlight">Learning</span> Journey</h1>
-                                <p>Track your study sessions, set goals, and unlock your potential with our beautifully crafted study tracker</p>
+                                <h1><span className="highlight">Are You 1%</span> Better Then Yesterday?</h1>
+                                <p>"Keep grinding untill you fullfil your Destiny"</p>
                                 <div className="cta-buttons">
                                     <button className="btn btn-primary" onClick={() => openAuthModal('signup')}>
                                         Get Started
@@ -426,24 +515,29 @@
                             <h2>{authMode === 'signin' ? 'Welcome Back' : 'Create Account'}</h2>
                             
                             <form onSubmit={handleAuthSubmit}>
+                                {message && (
+                                    <div style={{padding: '1rem', marginBottom: '1rem', borderRadius: '10px', backgroundColor: message.includes('error') || message.includes('do not match') ? 'var(--red)' : 'var(--gray)', color: 'var(--very-light-gray)', textAlign: 'center'}}>
+                                        {message}
+                                    </div>
+                                )}
                                 <div className="form-group">
                                     <label htmlFor="email">Email</label>
-                                    <input type="email" id="email" required />
+                                    <input type="email" name="email" id="email" required placeholder="your@email.com" />
                                 </div>
                                 <div className="form-group">
                                     <label htmlFor="password">Password</label>
-                                    <input type="password" id="password" required />
+                                    <input type="password" name="password" id="password" required placeholder="••••••••" minLength="6" />
                                 </div>
                                 {authMode === 'signup' && (
                                     <div className="form-group">
                                         <label htmlFor="confirmPassword">Confirm Password</label>
-                                        <input type="password" id="confirmPassword" required />
+                                        <input type="password" name="confirmPassword" id="confirmPassword" required placeholder="••••••••" minLength="6" />
                                     </div>
                                 )}
                                 
                                 <div className="auth-buttons">
-                                    <button type="submit" className="btn btn-primary" style={{flex: 1}}>
-                                        {authMode === 'signin' ? 'Sign In' : 'Sign Up'}
+                                    <button type="submit" className="btn btn-primary" style={{flex: 1}} disabled={loading}>
+                                        {loading ? 'Processing...' : (authMode === 'signin' ? 'Sign In' : 'Sign Up')}
                                     </button>
                                 </div>
                             </form>
