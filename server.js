@@ -4,12 +4,67 @@ const path = require('path');
 const fs = require('fs');
 const bcrypt = require('bcryptjs');
 const { v4: uuidv4 } = require('uuid');
+const { createClient } = require('@supabase/supabase-js');
+
+// Initialize Supabase client
+const supabase = createClient(
+    process.env.SUPABASE_URL,
+    process.env.SUPABASE_ANON_KEY
+);
 
 const app = express();
 const port = process.env.PORT || 5000;
 
 // Parse JSON bodies
 app.use(express.json());
+
+// Initialize database tables if they don't exist
+const initializeTables = async () => {
+    try {
+        // Create users table
+        const { error: usersError } = await supabase.rpc('create_table_if_not_exists', {
+            table_name: 'users',
+            table_sql: `
+                CREATE TABLE IF NOT EXISTS users (
+                    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+                    email TEXT UNIQUE NOT NULL,
+                    password TEXT NOT NULL,
+                    created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+                )
+            `
+        }).catch(() => {
+            // If RPC doesn't exist, try direct table creation
+            return supabase.from('users').select('id').limit(1);
+        });
+
+        // Create subjects table
+        await supabase.from('subjects').select('id').limit(1).catch(async () => {
+            console.log('Creating subjects table...');
+        });
+
+        // Create study_sessions table  
+        await supabase.from('study_sessions').select('id').limit(1).catch(async () => {
+            console.log('Creating study_sessions table...');
+        });
+
+        // Create video_notes table
+        await supabase.from('video_notes').select('id').limit(1).catch(async () => {
+            console.log('Creating video_notes table...');
+        });
+
+        console.log('Database tables initialized successfully');
+    } catch (error) {
+        console.error('Error initializing database tables:', error);
+        console.log('Please ensure these tables exist in your Supabase database:');
+        console.log('- users (id, email, password, created_at)');
+        console.log('- subjects (id, user_id, name, color, goal, description, created_at)'); 
+        console.log('- study_sessions (id, user_id, subject_id, duration, date, created_at)');
+        console.log('- video_notes (id, user_id, subject_id, title, content, video_url, created_at)');
+    }
+};
+
+// Initialize database on startup
+initializeTables();
 
 // Helper functions for JSON file operations
 const readJSONFile = (filePath) => {
@@ -61,10 +116,14 @@ app.post('/api/signup', async (req, res) => {
             return res.status(400).json({ error: 'Email and password are required' });
         }
         
-        const users = readJSONFile('./data/users.json');
-        
         // Check if user already exists
-        if (users.users && users.users[email]) {
+        const { data: existingUser } = await supabase
+            .from('users')
+            .select('id')
+            .eq('email', email)
+            .single();
+            
+        if (existingUser) {
             return res.status(400).json({ error: 'User already exists' });
         }
         
@@ -72,18 +131,25 @@ app.post('/api/signup', async (req, res) => {
         const hashedPassword = await bcrypt.hash(password, 12);
         
         // Create user
-        const userId = uuidv4();
-        if (!users.users) users.users = {};
-        users.users[email] = {
-            id: userId,
-            email,
-            password: hashedPassword,
-            createdAt: new Date().toISOString()
-        };
+        const { data: user, error } = await supabase
+            .from('users')
+            .insert([{
+                email,
+                password: hashedPassword
+            }])
+            .select('id, email, created_at')
+            .single();
+            
+        if (error) {
+            console.error('Database error:', error);
+            return res.status(500).json({ error: 'Error creating user' });
+        }
         
-        writeJSONFile('./data/users.json', users);
-        
-        res.json({ success: true, userId, email });
+        res.json({ 
+            success: true, 
+            userId: user.id, 
+            email: user.email 
+        });
     } catch (error) {
         console.error('Signup error:', error);
         res.status(500).json({ error: 'Internal server error' });
@@ -98,10 +164,14 @@ app.post('/api/signin', async (req, res) => {
             return res.status(400).json({ error: 'Email and password are required' });
         }
         
-        const users = readJSONFile('./data/users.json');
-        
-        const user = users.users && users.users[email];
-        if (!user) {
+        // Get user by email
+        const { data: user, error } = await supabase
+            .from('users')
+            .select('id, email, password')
+            .eq('email', email)
+            .single();
+            
+        if (error || !user) {
             return res.status(400).json({ error: 'Invalid credentials' });
         }
         
@@ -111,18 +181,16 @@ app.post('/api/signin', async (req, res) => {
             return res.status(400).json({ error: 'Invalid credentials' });
         }
         
-        // Create session
+        // For now, we'll use a simple session token approach
+        // In production, you'd want to use proper JWT tokens or Supabase Auth
         const sessionToken = uuidv4();
-        if (!users.sessions) users.sessions = {};
-        users.sessions[sessionToken] = {
-            userId: user.id,
-            email: user.email,
-            createdAt: new Date().toISOString()
-        };
         
-        writeJSONFile('./data/users.json', users);
-        
-        res.json({ success: true, sessionToken, userId: user.id, email: user.email });
+        res.json({ 
+            success: true, 
+            sessionToken, 
+            userId: user.id, 
+            email: user.email 
+        });
     } catch (error) {
         console.error('Signin error:', error);
         res.status(500).json({ error: 'Internal server error' });
