@@ -1,4 +1,23 @@
 {
-  "subjects": {},
+  "subjects": {
+    "9b64b9a4-9cc0-41f0-9222-6ff2fccc12bb": {
+      "id": "9b64b9a4-9cc0-41f0-9222-6ff2fccc12bb",
+      "userId": "f903036e-70d9-4fcd-a39f-24d9dc289001",
+      "name": "Mathematics",
+      "color": "blue",
+      "goal": "60",
+      "description": "Advanced calculus and algebra",
+      "createdAt": "2025-09-19T11:11:32.923Z"
+    },
+    "ddb97176-4708-4c1c-b46a-b8c0d770c582": {
+      "id": "ddb97176-4708-4c1c-b46a-b8c0d770c582",
+      "userId": "736666e3-97a0-48f0-8a12-6e8a2b4e110e",
+      "name": "Physics",
+      "color": "#f63c3c",
+      "goal": 60,
+      "description": "Newtonian Mechanics",
+      "createdAt": "2025-09-19T11:11:42.595Z"
+    }
+  },
   "study_sessions": {}
 }

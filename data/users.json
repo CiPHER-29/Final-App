@@ -5,6 +5,12 @@
       "email": "ahmadrafi5660@gmail.com",
       "password": "$2b$12$VzJdNePCr.DB0oJihRdPyePbrvjF8N6XeGG8rzFj1PZmS0/BITnbK",
       "createdAt": "2025-09-19T09:43:53.275Z"
+    },
+    "test@example.com": {
+      "id": "f903036e-70d9-4fcd-a39f-24d9dc289001",
+      "email": "test@example.com",
+      "password": "$2b$12$j1C2m6nc1Gwe.Rf8P4lfaOzQcyKvl8bo5MsoSwxJltbu4pV.Fk2qO",
+      "createdAt": "2025-09-19T11:11:27.007Z"
     }
   },
   "sessions": {
@@ -22,6 +28,11 @@
       "userId": "736666e3-97a0-48f0-8a12-6e8a2b4e110e",
       "email": "ahmadrafi5660@gmail.com",
       "createdAt": "2025-09-19T11:11:09.556Z"
+    },
+    "c3171d38-5bed-4480-81e7-c9e8db3ede67": {
+      "userId": "f903036e-70d9-4fcd-a39f-24d9dc289001",
+      "email": "test@example.com",
+      "createdAt": "2025-09-19T11:11:27.517Z"
     }
   }
 }
