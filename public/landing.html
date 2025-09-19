@@ -582,7 +582,8 @@
             );
         };
 
-        ReactDOM.render(<LandingPage />, document.getElementById('root'));
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<LandingPage />);
     </script>
 </body>
 </html>
