@@ -8,7 +8,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.development.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.development.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.23.5/babel.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.57.4/dist/umd/supabase.js"></script>
     <style>
         :root {
             --dark-green: #0C120C;
@@ -350,55 +349,28 @@
     <script type="text/babel">
         const { useState, useEffect } = React;
 
-        // Initialize Supabase client
-        let supabase = null;
+        // Simple authentication state
+        let currentUser = null;
         
-        // Wait for Supabase library to load and initialize client
-        const initSupabase = async () => {
-            // Wait for window.supabase to be available
-            let attempts = 0;
-            while (!window.supabase && attempts < 100) {
-                await new Promise(resolve => setTimeout(resolve, 50));
-                attempts++;
-            }
+        // Check for existing session on load
+        const initAuth = () => {
+            const sessionToken = localStorage.getItem('sessionToken');
+            const userData = localStorage.getItem('userData');
             
-            if (!window.supabase) {
-                console.error('Supabase library failed to load after', attempts, 'attempts');
-                return;
-            }
-            
-            try {
-                console.log('Supabase library loaded successfully');
-                const response = await fetch('/api/supabase-config');
-                const config = await response.json();
-                console.log('Supabase config loaded:', { url: config.url, keyLength: config.key.length });
-                supabase = window.supabase.createClient(config.url, config.key);
-                console.log('Supabase client initialized successfully');
-                
-                // Test the connection
-                const { data, error } = await supabase.auth.getSession();
-                if (error) {
-                    console.log('Session check error (normal if not logged in):', error.message);
-                } else {
-                    console.log('Supabase connection test successful');
-                }
-            } catch (error) {
-                console.error('Failed to load Supabase config:', error);
-                // Fallback configuration
+            if (sessionToken && userData) {
                 try {
-                    supabase = window.supabase.createClient(
-                        'https://ixpemzhkbewagfjwctlv.supabase.co',
-                        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Iml4cGVtemhrYmV3YWdmandjdGx2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTgyNzA0NjMsImV4cCI6MjA3Mzg0NjQ2M30.Qsqsp1ez82eyKUDMVldEGsHWIzIx1BhvwdQwBZUf_2M'
-                    );
-                    console.log('Supabase client initialized with fallback config');
-                } catch (fallbackError) {
-                    console.error('Failed to initialize with fallback config:', fallbackError);
+                    currentUser = JSON.parse(userData);
+                    console.log('User session restored:', currentUser.email);
+                } catch (error) {
+                    console.error('Error parsing user data:', error);
+                    localStorage.removeItem('sessionToken');
+                    localStorage.removeItem('userData');
                 }
             }
         };
         
         // Initialize on load
-        initSupabase();
+        initAuth();
 
         const LandingPage = () => {
             const [showAuthModal, setShowAuthModal] = useState(false);
@@ -408,38 +380,11 @@
             const [user, setUser] = useState(null);
 
             useEffect(() => {
-                // Wait for Supabase to be initialized
-                const initAuth = async () => {
-                    let retries = 0;
-                    while (!supabase && retries < 20) {
-                        await new Promise(resolve => setTimeout(resolve, 100));
-                        retries++;
-                    }
-                    
-                    if (!supabase) {
-                        console.error('Failed to initialize Supabase client');
-                        return;
-                    }
-
-                    // Check if user is already signed in
-                    const { data: { session } } = await supabase.auth.getSession();
-                    setUser(session?.user ?? null);
-                    if (session?.user) {
-                        window.location.href = '/app';
-                    }
-
-                    // Listen for auth changes
-                    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
-                        setUser(session?.user ?? null);
-                        if (event === 'SIGNED_IN') {
-                            window.location.href = '/app';
-                        }
-                    });
-
-                    return () => subscription?.unsubscribe();
-                };
-                
-                initAuth();
+                // Check if user is already logged in
+                if (currentUser) {
+                    setUser(currentUser);
+                    window.location.href = '/app';
+                }
             }, []);
 
             const openAuthModal = (mode) => {
@@ -458,12 +403,6 @@
                 setLoading(true);
                 setMessage('');
 
-                if (!supabase) {
-                    setMessage('Authentication service is not ready. Please try again.');
-                    setLoading(false);
-                    return;
-                }
-
                 const formData = new FormData(e.target);
                 const email = formData.get('email');
                 const password = formData.get('password');
@@ -477,30 +416,52 @@
                             return;
                         }
 
-                        const { data, error } = await supabase.auth.signUp({
-                            email,
-                            password,
+                        const response = await fetch('/api/signup', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                            },
+                            body: JSON.stringify({ email, password }),
                         });
 
-                        if (error) {
-                            setMessage(error.message);
+                        const result = await response.json();
+
+                        if (!response.ok) {
+                            setMessage(result.error || 'Signup failed');
                         } else {
-                            setMessage('Check your email for the confirmation link!');
+                            setMessage('Account created successfully! You can now sign in.');
+                            setAuthMode('signin');
                         }
                     } else {
-                        const { data, error } = await supabase.auth.signInWithPassword({
-                            email,
-                            password,
+                        const response = await fetch('/api/signin', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                            },
+                            body: JSON.stringify({ email, password }),
                         });
 
-                        if (error) {
-                            setMessage(error.message);
+                        const result = await response.json();
+
+                        if (!response.ok) {
+                            setMessage(result.error || 'Login failed');
                         } else {
-                            // Successful sign in will trigger the auth state change
-                            closeAuthModal();
+                            // Store session data
+                            localStorage.setItem('sessionToken', result.sessionToken);
+                            localStorage.setItem('userData', JSON.stringify({
+                                userId: result.userId,
+                                email: result.email
+                            }));
+                            
+                            currentUser = { userId: result.userId, email: result.email };
+                            setUser(currentUser);
+                            
+                            // Redirect to app
+                            window.location.href = '/app';
                         }
                     }
                 } catch (error) {
+                    console.error('Auth error:', error);
                     setMessage('An unexpected error occurred');
                 }
 
