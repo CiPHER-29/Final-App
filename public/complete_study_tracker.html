@@ -10,7 +10,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap');
-        
+
         :root {
             --primary-dark: #0F141A;
             --secondary-dark: #181C1F;
@@ -21,225 +21,225 @@
             --light-gray: #E5EFF7;
             --white: #FCFCFC;
         }
-        
+
         * {
             box-sizing: border-box;
         }
-        
+
         body { 
             margin: 0; 
             font-family: 'Space Mono', monospace;
             background-color: var(--primary-dark);
             color: var(--light-gray);
         }
-        
+
         /* Override Tailwind defaults */
         .bg-gradient-to-br {
             background: var(--primary-dark) !important;
         }
-        
+
         .bg-blue-50 {
             background: var(--primary-dark) !important;
         }
-        
+
         .from-blue-50 {
             background: var(--primary-dark) !important;
         }
-        
+
         .to-indigo-100 {
             background: var(--primary-dark) !important;
         }
-        
+
         .bg-white {
             background-color: var(--primary-dark) !important;
             border: 1px solid var(--tertiary-dark) !important;
         }
-        
+
         .text-gray-900 {
             color: var(--light-gray) !important;
         }
-        
+
         .text-gray-600 {
             color: var(--medium-gray) !important;
         }
-        
+
         .text-gray-800 {
             color: var(--light-gray) !important;
         }
-        
+
         .text-blue-600 {
             color: var(--accent-blue) !important;
         }
-        
+
         .bg-blue-600 {
             background-color: var(--accent-blue) !important;
         }
-        
+
         .bg-blue-100 {
             background-color: rgba(175, 194, 205, 0.2) !important;
         }
-        
+
         .bg-green-100 {
             background-color: rgba(175, 194, 205, 0.2) !important;
         }
-        
+
         .bg-purple-100 {
             background-color: rgba(229, 239, 247, 0.2) !important;
         }
-        
+
         .bg-yellow-100 {
             background-color: rgba(0, 183, 255, 0.2) !important;
         }
-        
+
         .bg-orange-100 {
             background-color: rgba(175, 194, 205, 0.2) !important;
         }
-        
+
         .bg-red-100 {
             background-color: rgba(0, 183, 255, 0.2) !important;
         }
-        
+
         .text-blue-600 {
             color: var(--accent-blue) !important;
         }
-        
+
         .text-green-600 {
             color: var(--medium-gray) !important;
         }
-        
+
         .text-purple-600 {
             color: var(--light-gray) !important;
         }
-        
+
         .text-yellow-700 {
             color: var(--accent-blue) !important;
         }
-        
+
         .text-yellow-600 {
             color: var(--accent-blue) !important;
         }
-        
+
         .text-yellow-900 {
             color: var(--accent-blue) !important;
         }
-        
+
         .text-green-900 {
             color: var(--medium-gray) !important;
         }
-        
+
         .text-blue-900 {
             color: var(--accent-blue) !important;
         }
-        
+
         .text-blue-800 {
             color: var(--accent-blue) !important;
         }
-        
+
         .text-green-800 {
             color: var(--medium-gray) !important;
         }
-        
+
         .text-orange-600 {
             color: var(--medium-gray) !important;
         }
-        
+
         .text-red-700 {
             color: var(--accent-blue) !important;
         }
-        
+
         .hover\\:bg-blue-700:hover {
             background-color: rgba(0, 183, 255, 0.85) !important;
         }
-        
+
         .hover\\:bg-gray-100:hover {
             background-color: rgba(175, 194, 205, 0.3) !important;
         }
-        
+
         .hover\\:bg-gray-300:hover {
             background-color: rgba(175, 194, 205, 0.5) !important;
         }
-        
+
         .bg-gray-200 {
             background-color: var(--medium-gray) !important;
         }
-        
+
         .border {
             border-color: var(--medium-gray) !important;
         }
-        
+
         .shadow-sm {
             box-shadow: 0 1px 3px rgba(0, 183, 255, 0.1) !important;
         }
-        
+
         .focus\\:ring-blue-500:focus {
             box-shadow: 0 0 0 2px rgba(0, 183, 255, 0.2) !important;
         }
-        
+
         .focus\\:border-blue-500:focus {
             border-color: var(--accent-blue) !important;
         }
-        
+
         /* Additional color overrides for proper color scheme */
         .hover\\:bg-yellow-200:hover {
             background-color: rgba(0, 183, 255, 0.3) !important;
         }
-        
+
         .from-green-500, .bg-green-500 {
             background-color: var(--medium-gray) !important;
         }
-        
+
         .to-green-600, .bg-green-600 {
             background-color: var(--medium-gray) !important;
         }
-        
+
         .from-purple-500, .bg-purple-500 {
             background-color: var(--light-gray) !important;
         }
-        
+
         .to-purple-600, .bg-purple-600 {
             background-color: var(--light-gray) !important;
         }
-        
+
         .from-orange-500, .bg-orange-500 {
             background-color: var(--medium-gray) !important;
         }
-        
+
         .to-orange-600, .bg-orange-600 {
             background-color: var(--medium-gray) !important;
         }
-        
+
         .bg-green-50 {
             background-color: rgba(175, 194, 205, 0.1) !important;
         }
-        
+
         .bg-yellow-50 {
             background-color: rgba(0, 183, 255, 0.1) !important;
         }
-        
+
         .text-green-100 {
             color: var(--white) !important;
         }
-        
+
         .text-purple-100 {
             color: var(--white) !important;
         }
-        
+
         .text-orange-100 {
             color: var(--white) !important;
         }
-        
+
         .text-yellow-500 {
             color: var(--accent-blue) !important;
         }
-        
+
         .border-blue-200 {
             border-color: var(--medium-gray) !important;
         }
-        
+
         .focus\\:ring-2:focus {
             box-shadow: 0 0 0 2px rgba(0, 183, 255, 0.2) !important;
         }
-        
+
         /* Dark theme overrides - remove all white/light backgrounds */
         .bg-black {
             background-color: rgba(15, 20, 26, 0.8) !important;
@@ -247,86 +247,86 @@
         .bg-gray-50 {
             background-color: var(--primary-dark) !important;
         }
-        
+
         .bg-gray-100 {
             background-color: rgba(175, 194, 205, 0.1) !important;
         }
-        
+
         .bg-indigo-50 {
             background-color: var(--primary-dark) !important;
         }
-        
+
         /* Text color adjustments for dark theme */
         .text-white {
             color: var(--white) !important;
         }
-        
+
         .text-black {
             color: var(--light-gray) !important;
         }
-        
+
         /* Card and modal backgrounds */
         .rounded-lg, .rounded-xl {
             background-color: var(--primary-dark);
             border: 1px solid var(--medium-gray);
         }
-        
+
         /* Additional background overrides */
         .min-h-screen {
             background: var(--primary-dark) !important;
         }
-        
+
         /* Remove any remaining light backgrounds */
         div[class*="bg-"] {
             color: var(--light-gray);
         }
-        
+
         input, textarea, select {
             background-color: var(--primary-dark) !important;
             border-color: var(--medium-gray) !important;
             color: var(--light-gray) !important;
             font-family: 'Space Mono', monospace !important;
         }
-        
+
         input:focus, textarea:focus, select:focus {
             border-color: var(--accent-blue) !important;
             outline: none !important;
             box-shadow: 0 0 0 2px rgba(0, 183, 255, 0.2) !important;
         }
-        
+
         button {
             font-family: 'Space Mono', monospace !important;
         }
-        
+
         /* Modal backdrop */
         .modal-backdrop {
             background-color: rgba(15, 20, 26, 0.8) !important;
         }
-        
+
         /* Active timer animation */
         .animate-pulse { 
             animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite; 
         }
-        
+
         @keyframes pulse { 
             0%, 100% { opacity: 1; } 
             50% { opacity: .5; } 
         }
-        
+
         /* Custom scrollbar */
         ::-webkit-scrollbar {
             width: 8px;
         }
-        
+
         ::-webkit-scrollbar-track {
             background: var(--primary-dark);
         }
-        
+
         ::-webkit-scrollbar-thumb {
             background: var(--medium-gray);
             border-radius: 4px;
         }
-        
+
         ::-webkit-scrollbar-thumb:hover {
             background: var(--light-gray);
         }
@@ -491,9 +491,9 @@
                         window.location.href = '/';
                         return;
                     }
-                    
+
                     setUser(currentUser);
-                    
+
                     // Load user's study data
                     try {
                         const response = await fetch(`/api/study-data/${currentUser.userId}`);
@@ -505,13 +505,13 @@
                     } catch (error) {
                         console.error('Error loading study data:', error);
                     }
-                    
+
                     // Load video notes
                     await loadVideoNotes();
-                    
+
                     setLoading(false);
                 };
-                
+
                 initializeApp();
             }, []);
 
@@ -535,7 +535,7 @@
 
             const addSubject = async (subjectData) => {
                 if (!user) return;
-                
+
                 try {
                     const response = await fetch('/api/subjects', {
                         method: 'POST',
@@ -547,7 +547,7 @@
                             ...subjectData
                         }),
                     });
-                    
+
                     if (response.ok) {
                         const result = await response.json();
                         setSubjects(prev => [...prev, result.subject]);
@@ -596,7 +596,7 @@
                                 date: new Date().toISOString().split('T')[0]
                             }),
                         });
-                        
+
                         if (response.ok) {
                             const result = await response.json();
                             setStudySessions(prev => [...prev, result.session]);
@@ -613,7 +613,7 @@
 
             const addSession = async (sessionData) => {
                 if (!user) return;
-                
+
                 try {
                     const response = await fetch('/api/sessions', {
                         method: 'POST',
@@ -627,7 +627,7 @@
                             date: sessionData.date
                         }),
                     });
-                    
+
                     if (response.ok) {
                         const result = await response.json();
                         setStudySessions(prev => [...prev, result.session]);
@@ -642,7 +642,7 @@
 
             const addVideoNote = async (noteData) => {
                 if (!user) return;
-                
+
                 try {
                     const response = await fetch('/api/video-notes', {
                         method: 'POST',
@@ -657,7 +657,7 @@
                             subjectId: noteData.subjectId || null
                         }),
                     });
-                    
+
                     if (response.ok) {
                         const result = await response.json();
                         setVideoNotes(prev => [...prev, result.note]);
@@ -672,7 +672,7 @@
 
             const loadVideoNotes = async () => {
                 if (!user) return;
-                
+
                 try {
                     const response = await fetch(`/api/video-notes/${user.userId}`);
                     if (response.ok) {
@@ -686,12 +686,12 @@
 
             const deleteVideoNote = async (noteId) => {
                 if (!user) return;
-                
+
                 try {
                     const response = await fetch(`/api/video-notes/${noteId}`, {
                         method: 'DELETE',
                     });
-                    
+
                     if (response.ok) {
                         setVideoNotes(prev => prev.filter(note => note.id !== noteId));
                     } else {
@@ -707,7 +707,7 @@
                 const totalTime = sessions.reduce((sum, s) => sum + s.duration, 0);
                 const sessionsToday = sessions.filter(s => s.date === new Date().toISOString().split('T')[0]).length;
                 const totalSessions = sessions.length;
-                
+
                 return { totalTime, sessionsToday, totalSessions };
             };
 
@@ -716,7 +716,7 @@
                 const today = new Date().toISOString().split('T')[0];
                 const timeToday = studySessions.filter(s => s.date === today).reduce((sum, s) => sum + s.duration, 0);
                 const sessionsToday = studySessions.filter(s => s.date === today).length;
-                
+
                 return { totalTime, timeToday, sessionsToday };
             };
 
@@ -727,7 +727,7 @@
                     goal: subject?.goal || 60,
                     description: subject?.description || ''
                 });
-                
+
                 const colorOptions = [
                     { value: '#C20114', name: 'Red' },
                     { value: '#7B8085', name: 'Gray' },
@@ -997,7 +997,7 @@
             };
 
             const overallStats = getOverallStats();
-            
+
             if (loading) {
                 return (
                     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center">
@@ -1149,7 +1149,7 @@
                                             Add Subject
                                         </button>
                                     </div>
-                                    
+
                                     {subjects.length === 0 ? (
                                         <div className="text-center py-12">
                                             <BookOpen className="w-16 h-16 text-gray-300 mx-auto mb-4" />
@@ -1166,7 +1166,7 @@
                                             {subjects.map(subject => {
                                                 const stats = getSubjectStats(subject.id);
                                                 const goalProgress = (stats.totalTime / (subject.goal * 60)) * 100;
-                                                
+
                                                 return (
                                                     <div key={subject.id} className="border rounded-lg p-4 hover:shadow-md transition-shadow">
                                                         <div className="flex items-center gap-3 mb-3">
@@ -1246,7 +1246,7 @@
                                                     s.subjectId === subject.id && 
                                                     s.date === new Date().toISOString().split('T')[0]
                                                 ).reduce((sum, s) => sum + s.duration, 0);
-                                                
+
                                                 return (
                                                     <div key={subject.id} className="border rounded-xl p-6 hover:shadow-lg transition-all duration-200">
                                                         <div className="flex items-start justify-between mb-4">
@@ -1267,7 +1267,7 @@
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                            
+
                                                             <div className="flex items-center gap-2">
                                                                 {!activeTimer && (
                                                                     <button
@@ -1305,7 +1305,7 @@
                                                                     {Math.floor(todayStudied / 3600)}h {Math.floor((todayStudied % 3600) / 60)}m
                                                                 </p>
                                                             </div>
-                                                            
+
                                                             <div className="bg-green-50 rounded-lg p-4">
                                                                 <div className="flex items-center gap-2 mb-2">
                                                                     <TrendingUp className="w-4 h-4 text-green-600" />
@@ -1315,7 +1315,7 @@
                                                                     {Math.floor(stats.totalTime / 3600)}h {Math.floor((stats.totalTime % 3600) / 60)}m
                                                                 </p>
                                                             </div>
-                                                            
+
                                                             <div className="bg-purple-50 rounded-lg p-4">
                                                                 <div className="flex items-center gap-2 mb-2">
                                                                     <Target className="w-4 h-4 text-purple-600" />
@@ -1405,7 +1405,7 @@
                                                         {studySessions.filter(s => s.date === new Date().toISOString().split('T')[0]).length} sessions
                                                     </p>
                                                 </div>
-                                                
+
                                                 <div className="bg-green-50 rounded-lg p-4">
                                                     <div className="flex items-center gap-2 mb-2">
                                                         <Clock className="w-4 h-4 text-green-600" />
@@ -1420,7 +1420,7 @@
                                                         })()} sessions
                                                     </p>
                                                 </div>
-                                                
+
                                                 <div className="bg-purple-50 rounded-lg p-4">
                                                     <div className="flex items-center gap-2 mb-2">
                                                         <TrendingUp className="w-4 h-4 text-purple-600" />
@@ -1430,7 +1430,7 @@
                                                         {studySessions.length} sessions
                                                     </p>
                                                 </div>
-                                                
+
                                                 <div className="bg-yellow-50 rounded-lg p-4">
                                                     <div className="flex items-center gap-2 mb-2">
                                                         <BarChart3 className="w-4 h-4 text-yellow-600" />
@@ -1451,7 +1451,7 @@
                                                         .map(session => {
                                                             const subject = subjects.find(s => s.id === session.subjectId);
                                                             const sessionDate = new Date(session.timestamp);
-                                                            
+
                                                             return (
                                                                 <div key={session.id} className="flex items-center justify-between bg-white rounded-lg p-3">
                                                                     <div className="flex items-center gap-3">
@@ -1502,7 +1502,7 @@
                                                                 .map(session => {
                                                                     const subject = subjects.find(s => s.id === session.subjectId);
                                                                     const sessionDate = new Date(session.timestamp);
-                                                                    
+
                                                                     return (
                                                                         <tr key={session.id} className="hover:bg-gray-50">
                                                                             <td className="px-6 py-4 whitespace-nowrap">
@@ -1590,12 +1590,12 @@
                                                     </p>
                                                 </div>
 
-                                                <div className="bg-gradient-to-br from-green-500 to-green-600 rounded-xl p-6 text-white">
+                                                <div className="bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl p-6 text-white">
                                                     <div className="flex items-center gap-3 mb-4">
                                                         <Calendar className="w-8 h-8" />
                                                         <div>
                                                             <h3 className="text-lg font-semibold">Study Days</h3>
-                                                            <p className="text-green-100">Unique dates</p>
+                                                            <p className="text-blue-100">Unique dates</p>
                                                         </div>
                                                     </div>
                                                     <p className="text-3xl font-bold">
@@ -1603,12 +1603,12 @@
                                                     </p>
                                                 </div>
 
-                                                <div className="bg-gradient-to-br from-purple-500 to-purple-600 rounded-xl p-6 text-white">
+                                                <div className="bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl p-6 text-white">
                                                     <div className="flex items-center gap-3 mb-4">
                                                         <Target className="w-8 h-8" />
                                                         <div>
                                                             <h3 className="text-lg font-semibold">Average Session</h3>
-                                                            <p className="text-purple-100">Per study</p>
+                                                            <p className="text-blue-100">Per study</p>
                                                         </div>
                                                     </div>
                                                     <p className="text-3xl font-bold">
@@ -1616,12 +1616,12 @@
                                                     </p>
                                                 </div>
 
-                                                <div className="bg-gradient-to-br from-orange-500 to-orange-600 rounded-xl p-6 text-white">
+                                                <div className="bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl p-6 text-white">
                                                     <div className="flex items-center gap-3 mb-4">
                                                         <Activity className="w-8 h-8" />
                                                         <div>
                                                             <h3 className="text-lg font-semibold">Study Streak</h3>
-                                                            <p className="text-orange-100">Current days</p>
+                                                            <p className="text-blue-100">Current days</p>
                                                         </div>
                                                     </div>
                                                     <p className="text-3xl font-bold">
@@ -1643,7 +1643,7 @@
                                                         <BarChart3 className="w-6 h-6 text-blue-600" />
                                                         <h3 className="text-xl font-semibold text-gray-900">Study Time by Subject</h3>
                                                     </div>
-                                                    
+
                                                     <div className="space-y-4">
                                                         {subjects.map(subject => {
                                                             const subjectTime = studySessions
@@ -1651,7 +1651,7 @@
                                                                 .reduce((sum, s) => sum + s.duration, 0);
                                                             const totalTime = studySessions.reduce((sum, s) => sum + s.duration, 0);
                                                             const percentage = totalTime > 0 ? (subjectTime / totalTime * 100) : 0;
-                                                            
+
                                                             return (
                                                                 <div key={subject.id} className="space-y-2">
                                                                     <div className="flex items-center justify-between">
@@ -1691,7 +1691,7 @@
                                                         <Target className="w-6 h-6 text-green-600" />
                                                         <h3 className="text-xl font-semibold text-gray-900">Goal Achievement</h3>
                                                     </div>
-                                                    
+
                                                     <div className="space-y-4">
                                                         {subjects.map(subject => {
                                                             const todayTime = studySessions
@@ -1699,7 +1699,7 @@
                                                                 .reduce((sum, s) => sum + s.duration, 0);
                                                             const goalProgress = (todayTime / (subject.goal * 60)) * 100;
                                                             const isGoalMet = goalProgress >= 100;
-                                                            
+
                                                             return (
                                                                 <div key={subject.id} className="space-y-2">
                                                                     <div className="flex items-center justify-between">
@@ -1740,7 +1740,7 @@
                                                         <Activity className="w-6 h-6 text-purple-600" />
                                                         <h3 className="text-xl font-semibold text-gray-900">Weekly Activity</h3>
                                                     </div>
-                                                    
+
                                                     <div className="space-y-3">
                                                         {Array.from({length: 7}, (_, i) => {
                                                             const date = new Date();
@@ -1753,7 +1753,7 @@
                                                             const dayHours = dayTime / 3600;
                                                             const maxHours = 8; // Maximum scale for visualization
                                                             const percentage = Math.min((dayHours / maxHours) * 100, 100);
-                                                            
+
                                                             return (
                                                                 <div key={dateStr} className="flex items-center gap-4">
                                                                     <div className="w-12 text-sm font-medium text-gray-600">
@@ -1787,7 +1787,7 @@
                                                         <TrendingUp className="w-6 h-6 text-orange-600" />
                                                         <h3 className="text-xl font-semibold text-gray-900">Study Insights</h3>
                                                     </div>
-                                                    
+
                                                     <div className="space-y-4">
                                                         <div className="p-4 bg-blue-50 rounded-lg">
                                                             <div className="flex items-center gap-2 mb-2">
