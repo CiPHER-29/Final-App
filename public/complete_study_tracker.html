@@ -361,6 +361,9 @@
                         console.error('Error loading study data:', error);
                     }
                     
+                    // Load video notes
+                    await loadVideoNotes();
+                    
                     setLoading(false);
                 };
                 
@@ -489,6 +492,68 @@
                     }
                 } catch (error) {
                     console.error('Error adding session:', error);
+                }
+            };
+
+            const addVideoNote = async (noteData) => {
+                if (!user) return;
+                
+                try {
+                    const response = await fetch('/api/video-notes', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            userId: user.userId,
+                            title: noteData.title,
+                            content: noteData.content,
+                            videoUrl: noteData.videoUrl || null,
+                            subjectId: noteData.subjectId || null
+                        }),
+                    });
+                    
+                    if (response.ok) {
+                        const result = await response.json();
+                        setVideoNotes(prev => [...prev, result.note]);
+                        setShowAddVideoNote(false);
+                    } else {
+                        console.error('Error adding video note');
+                    }
+                } catch (error) {
+                    console.error('Error adding video note:', error);
+                }
+            };
+
+            const loadVideoNotes = async () => {
+                if (!user) return;
+                
+                try {
+                    const response = await fetch(`/api/video-notes/${user.userId}`);
+                    if (response.ok) {
+                        const result = await response.json();
+                        setVideoNotes(result.notes);
+                    }
+                } catch (error) {
+                    console.error('Error loading video notes:', error);
+                }
+            };
+
+            const deleteVideoNote = async (noteId) => {
+                if (!user) return;
+                
+                try {
+                    const response = await fetch(`/api/video-notes/${noteId}`, {
+                        method: 'DELETE',
+                    });
+                    
+                    if (response.ok) {
+                        setVideoNotes(prev => prev.filter(note => note.id !== noteId));
+                    } else {
+                        console.error('Error deleting video note');
+                    }
+                } catch (error) {
+                    console.error('Error deleting video note:', error);
                 }
             };
 
@@ -1703,7 +1768,11 @@
                                                             </div>
                                                         </div>
                                                         <div className="flex items-center gap-2">
-                                                            <button className="p-2 bg-red-100 text-red-700 rounded-lg hover:bg-red-200 transition-colors">
+                                                            <button 
+                                                                onClick={() => deleteVideoNote(note.id)}
+                                                                className="p-2 bg-red-100 text-red-700 rounded-lg hover:bg-red-200 transition-colors"
+                                                                title="Delete Note"
+                                                            >
                                                                 <Trash2 className="w-4 h-4" />
                                                             </button>
                                                         </div>

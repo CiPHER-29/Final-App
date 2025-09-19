@@ -28,5 +28,16 @@
       "date": "2025-09-19",
       "timestamp": "2025-09-19T11:13:16.701Z"
     }
+  },
+  "video_notes": {
+    "eef39578-3993-41f9-8cdf-a6d2270f06ed": {
+      "id": "eef39578-3993-41f9-8cdf-a6d2270f06ed",
+      "userId": "f903036e-70d9-4fcd-a39f-24d9dc289001",
+      "title": "React Hooks Tutorial",
+      "content": "Learn about useState and useEffect hooks for better state management in React components.",
+      "videoUrl": "https://www.youtube.com/watch?v=O6P86uwfdR0",
+      "subjectId": "9b64b9a4-9cc0-41f0-9222-6ff2fccc12bb",
+      "createdAt": "2025-09-19T11:47:41.979Z"
+    }
   }
 }

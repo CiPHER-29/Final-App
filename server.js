@@ -197,6 +197,86 @@ app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'landing.html'));
 });
 
+// Video notes endpoints
+app.get('/api/video-notes/:userId', (req, res) => {
+    try {
+        const { userId } = req.params;
+        const studyData = readJSONFile('./data/study_data.json');
+        
+        const userNotes = Object.values(studyData.video_notes || {}).filter(n => n.userId === userId);
+        
+        // Add subject information to notes
+        const notesWithSubjects = userNotes.map(note => {
+            if (note.subjectId) {
+                const subject = studyData.subjects && studyData.subjects[note.subjectId];
+                return { ...note, subject };
+            }
+            return note;
+        });
+        
+        res.json({ notes: notesWithSubjects });
+    } catch (error) {
+        console.error('Get video notes error:', error);
+        res.status(500).json({ error: 'Internal server error' });
+    }
+});
+
+app.post('/api/video-notes', (req, res) => {
+    try {
+        const { userId, title, content, videoUrl, subjectId } = req.body;
+        
+        if (!userId || !title || !content) {
+            return res.status(400).json({ error: 'UserId, title, and content are required' });
+        }
+        
+        const studyData = readJSONFile('./data/study_data.json');
+        if (!studyData.video_notes) studyData.video_notes = {};
+        
+        const noteId = uuidv4();
+        studyData.video_notes[noteId] = {
+            id: noteId,
+            userId,
+            title,
+            content,
+            videoUrl: videoUrl || null,
+            subjectId: subjectId || null,
+            createdAt: new Date().toISOString()
+        };
+        
+        writeJSONFile('./data/study_data.json', studyData);
+        
+        // Add subject information to response
+        let noteWithSubject = studyData.video_notes[noteId];
+        if (subjectId && studyData.subjects && studyData.subjects[subjectId]) {
+            noteWithSubject = { ...noteWithSubject, subject: studyData.subjects[subjectId] };
+        }
+        
+        res.json({ success: true, note: noteWithSubject });
+    } catch (error) {
+        console.error('Add video note error:', error);
+        res.status(500).json({ error: 'Internal server error' });
+    }
+});
+
+app.delete('/api/video-notes/:noteId', (req, res) => {
+    try {
+        const { noteId } = req.params;
+        
+        const studyData = readJSONFile('./data/study_data.json');
+        
+        if (studyData.video_notes && studyData.video_notes[noteId]) {
+            delete studyData.video_notes[noteId];
+            writeJSONFile('./data/study_data.json', studyData);
+            res.json({ success: true });
+        } else {
+            res.status(404).json({ error: 'Video note not found' });
+        }
+    } catch (error) {
+        console.error('Delete video note error:', error);
+        res.status(500).json({ error: 'Internal server error' });
+    }
+});
+
 // Route for the main app
 app.get('/app', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'complete_study_tracker.html'));
