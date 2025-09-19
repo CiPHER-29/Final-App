@@ -330,6 +330,12 @@
         ::-webkit-scrollbar-thumb:hover {
             background: var(--light-gray);
         }
+        
+        /* Custom style for selected tab */
+        .tab-selected {
+            background-color: var(--accent-blue) !important;
+            color: var(--white) !important;
+        }
     </style>
 </head>
 <body>
@@ -1046,7 +1052,7 @@
                             </div>
                         </div>
 
-                        <div className="bg-white rounded-xl shadow-sm border mb-6">
+                        <div className="bg-white rounded-xl shadow-sm mb-6">
                             <div className="flex flex-wrap gap-1 p-2">
                                 {['dashboard', 'subjects', 'sessions', 'analytics', 'video-notes'].map((view) => (
                                     <button
@@ -1054,7 +1060,7 @@
                                         onClick={() => setCurrentView(view)}
                                         className={`px-4 py-2 rounded-lg font-medium transition-colors capitalize ${
                                             currentView === view 
-                                                ? 'bg-gray-200 text-blue-800' 
+                                                ? 'tab-selected' 
                                                 : 'text-gray-600 hover:bg-gray-100'
                                         }`}
                                     >
@@ -1067,7 +1073,7 @@
                         {currentView === 'dashboard' && (
                             <div className="space-y-6">
                                 <div className="grid md:grid-cols-3 gap-6">
-                                    <div className="bg-white rounded-xl p-6 shadow-sm border">
+                                    <div className="bg-white rounded-xl p-6 shadow-sm">
                                         <div className="flex items-center gap-3">
                                             <div className="p-3 bg-blue-100 rounded-lg">
                                                 <Clock className="w-6 h-6 text-blue-600" />
@@ -1080,7 +1086,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div className="bg-white rounded-xl p-6 shadow-sm border">
+                                    <div className="bg-white rounded-xl p-6 shadow-sm">
                                         <div className="flex items-center gap-3">
                                             <div className="p-3 bg-green-100 rounded-lg">
                                                 <BookOpen className="w-6 h-6 text-green-600" />
@@ -1091,7 +1097,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div className="bg-white rounded-xl p-6 shadow-sm border">
+                                    <div className="bg-white rounded-xl p-6 shadow-sm">
                                         <div className="flex items-center gap-3">
                                             <div className="p-3 bg-purple-100 rounded-lg">
                                                 <TrendingUp className="w-6 h-6 text-purple-600" />
@@ -1107,7 +1113,7 @@
                                 </div>
 
                                 {activeTimer && (
-                                    <div className="bg-white rounded-xl p-6 shadow-sm border">
+                                    <div className="bg-white rounded-xl p-6 shadow-sm">
                                         <div className="flex items-center justify-between">
                                             <div className="flex items-center gap-4">
                                                 <div className="w-4 h-4 bg-red-500 rounded-full animate-pulse"></div>
@@ -1138,7 +1144,7 @@
                                     </div>
                                 )}
 
-                                <div className="bg-white rounded-xl p-6 shadow-sm border">
+                                <div className="bg-white rounded-xl p-6 shadow-sm">
                                     <div className="flex items-center justify-between mb-4">
                                         <h2 className="text-xl font-semibold">Your Subjects</h2>
                                         <button
@@ -1210,7 +1216,7 @@
 
                         {currentView === 'subjects' && (
                             <div className="space-y-6">
-                                <div className="bg-white rounded-xl p-6 shadow-sm border">
+                                <div className="bg-white rounded-xl p-6 shadow-sm">
                                     <div className="flex items-center justify-between mb-6">
                                         <div>
                                             <h2 className="text-2xl font-bold text-gray-900">Subject Management</h2>
@@ -1353,7 +1359,7 @@
 
                         {currentView === 'sessions' && (
                             <div className="space-y-6">
-                                <div className="bg-white rounded-xl p-6 shadow-sm border">
+                                <div className="bg-white rounded-xl p-6 shadow-sm">
                                     <div className="flex items-center justify-between mb-6">
                                         <div>
                                             <h2 className="text-2xl font-bold text-gray-900">Study Sessions</h2>
@@ -1540,7 +1546,7 @@
 
                         {currentView === 'analytics' && (
                             <div className="space-y-6">
-                                <div className="bg-white rounded-xl p-6 shadow-sm border">
+                                <div className="bg-white rounded-xl p-6 shadow-sm">
                                     <div className="flex items-center justify-between mb-6">
                                         <div>
                                             <h2 className="text-2xl font-bold text-gray-900">Analytics Dashboard</h2>
@@ -1871,7 +1877,7 @@
 
                         {currentView === 'video-notes' && (
                             <div className="space-y-6">
-                                <div className="bg-white rounded-xl p-6 shadow-sm border">
+                                <div className="bg-white rounded-xl p-6 shadow-sm">
                                     <div className="flex items-center justify-between mb-6">
                                         <div>
                                             <h2 className="text-2xl font-bold text-gray-900">Video Notes</h2>
