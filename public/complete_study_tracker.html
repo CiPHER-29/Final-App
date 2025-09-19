@@ -1789,12 +1789,12 @@
                                                     </div>
 
                                                     <div className="space-y-4">
-                                                        <div className="p-4 bg-blue-600 rounded-lg">
+                                                        <div className="p-4 bg-gray-200 rounded-lg">
                                                             <div className="flex items-center gap-2 mb-2">
-                                                                <Clock className="w-4 h-4 text-white" />
-                                                                <span className="font-medium text-white">Most Productive Subject</span>
+                                                                <Clock className="w-4 h-4 text-black" />
+                                                                <span className="font-medium text-black">Most Productive Subject</span>
                                                             </div>
-                                                            <p className="text-white">
+                                                            <p className="text-black">
                                                                 {(() => {
                                                                     const subjectTimes = subjects.map(subject => ({
                                                                         name: subject.name,
@@ -1810,12 +1810,12 @@
                                                             </p>
                                                         </div>
 
-                                                        <div className="p-4 bg-blue-600 rounded-lg">
+                                                        <div className="p-4 bg-gray-200 rounded-lg">
                                                             <div className="flex items-center gap-2 mb-2">
-                                                                <Target className="w-4 h-4 text-white" />
-                                                                <span className="font-medium text-white">Goals Achieved Today</span>
+                                                                <Target className="w-4 h-4 text-black" />
+                                                                <span className="font-medium text-black">Goals Achieved Today</span>
                                                             </div>
-                                                            <p className="text-white">
+                                                            <p className="text-black">
                                                                 {(() => {
                                                                     const today = new Date().toISOString().split('T')[0];
                                                                     const goalsAchieved = subjects.filter(subject => {
@@ -1829,12 +1829,12 @@
                                                             </p>
                                                         </div>
 
-                                                        <div className="p-4 bg-blue-600 rounded-lg">
+                                                        <div className="p-4 bg-gray-200 rounded-lg">
                                                             <div className="flex items-center gap-2 mb-2">
-                                                                <Award className="w-4 h-4 text-white" />
-                                                                <span className="font-medium text-white">Longest Session</span>
+                                                                <Award className="w-4 h-4 text-black" />
+                                                                <span className="font-medium text-black">Longest Session</span>
                                                             </div>
-                                                            <p className="text-white">
+                                                            <p className="text-black">
                                                                 {(() => {
                                                                     const longestSession = studySessions.reduce((max, current) => 
                                                                         current.duration > max.duration ? current : max, 
@@ -1848,12 +1848,12 @@
                                                             </p>
                                                         </div>
 
-                                                        <div className="p-4 bg-blue-600 rounded-lg">
+                                                        <div className="p-4 bg-gray-200 rounded-lg">
                                                             <div className="flex items-center gap-2 mb-2">
-                                                                <Activity className="w-4 h-4 text-white" />
-                                                                <span className="font-medium text-white">Weekly Average</span>
+                                                                <Activity className="w-4 h-4 text-black" />
+                                                                <span className="font-medium text-black">Weekly Average</span>
                                                             </div>
-                                                            <p className="text-white">
+                                                            <p className="text-black">
                                                                 {(() => {
                                                                     const weekStart = new Date();
                                                                     weekStart.setDate(weekStart.getDate() - 7);
