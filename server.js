@@ -116,12 +116,26 @@ app.post('/api/signup', async (req, res) => {
             return res.status(400).json({ error: 'Email and password are required' });
         }
         
-        // Check if user already exists
-        const { data: existingUser } = await supabase
-            .from('users')
-            .select('id')
-            .eq('email', email)
-            .single();
+        let useFileSystem = false;
+        let existingUser = null;
+        
+        // Try Supabase first
+        try {
+            const { data } = await supabase
+                .from('users')
+                .select('id')
+                .eq('email', email)
+                .single();
+            existingUser = data;
+        } catch (supabaseError) {
+            console.log('Supabase not available, using file-based storage');
+            useFileSystem = true;
+            // Check file-based storage
+            const users = readJSONFile('./data/users.json');
+            if (users.users && users.users[email]) {
+                existingUser = users.users[email];
+            }
+        }
             
         if (existingUser) {
             return res.status(400).json({ error: 'User already exists' });
@@ -129,27 +143,49 @@ app.post('/api/signup', async (req, res) => {
         
         // Hash password
         const hashedPassword = await bcrypt.hash(password, 12);
+        const userId = uuidv4();
         
-        // Create user
-        const { data: user, error } = await supabase
-            .from('users')
-            .insert([{
-                email,
-                password: hashedPassword
-            }])
-            .select('id, email, created_at')
-            .single();
+        if (useFileSystem) {
+            // Use file-based storage
+            const users = readJSONFile('./data/users.json');
+            if (!users.users) users.users = {};
             
-        if (error) {
-            console.error('Database error:', error);
-            return res.status(500).json({ error: 'Error creating user' });
+            users.users[email] = {
+                id: userId,
+                email,
+                password: hashedPassword,
+                createdAt: new Date().toISOString()
+            };
+            
+            writeJSONFile('./data/users.json', users);
+            
+            res.json({ 
+                success: true, 
+                userId: userId, 
+                email: email 
+            });
+        } else {
+            // Use Supabase
+            const { data: user, error } = await supabase
+                .from('users')
+                .insert([{
+                    email,
+                    password: hashedPassword
+                }])
+                .select('id, email, created_at')
+                .single();
+                
+            if (error) {
+                console.error('Database error:', error);
+                return res.status(500).json({ error: 'Error creating user' });
+            }
+            
+            res.json({ 
+                success: true, 
+                userId: user.id, 
+                email: user.email 
+            });
         }
-        
-        res.json({ 
-            success: true, 
-            userId: user.id, 
-            email: user.email 
-        });
     } catch (error) {
         console.error('Signup error:', error);
         res.status(500).json({ error: 'Internal server error' });
@@ -164,14 +200,32 @@ app.post('/api/signin', async (req, res) => {
             return res.status(400).json({ error: 'Email and password are required' });
         }
         
-        // Get user by email
-        const { data: user, error } = await supabase
-            .from('users')
-            .select('id, email, password')
-            .eq('email', email)
-            .single();
+        let user = null;
+        let useFileSystem = false;
+        
+        // Try Supabase first
+        try {
+            const { data, error } = await supabase
+                .from('users')
+                .select('id, email, password')
+                .eq('email', email)
+                .single();
+            if (!error && data) {
+                user = data;
+            } else {
+                throw new Error('Supabase query failed');
+            }
+        } catch (supabaseError) {
+            console.log('Supabase not available, using file-based storage');
+            useFileSystem = true;
+            // Check file-based storage
+            const users = readJSONFile('./data/users.json');
+            if (users.users && users.users[email]) {
+                user = users.users[email];
+            }
+        }
             
-        if (error || !user) {
+        if (!user) {
             return res.status(400).json({ error: 'Invalid credentials' });
         }
         
@@ -182,8 +236,19 @@ app.post('/api/signin', async (req, res) => {
         }
         
         // For now, we'll use a simple session token approach
-        // In production, you'd want to use proper JWT tokens or Supabase Auth
         const sessionToken = uuidv4();
+        
+        // Store session in file-based storage for consistency
+        if (useFileSystem) {
+            const users = readJSONFile('./data/users.json');
+            if (!users.sessions) users.sessions = {};
+            users.sessions[sessionToken] = {
+                userId: user.id,
+                email: user.email,
+                createdAt: new Date().toISOString()
+            };
+            writeJSONFile('./data/users.json', users);
+        }
         
         res.json({ 
             success: true, 
