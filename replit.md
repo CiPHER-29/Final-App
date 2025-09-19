@@ -66,5 +66,13 @@ Preferred communication style: Simple, everyday language.
 
 ### Hosting & Deployment
 - **Static File Serving**: Express.js serves public directory contents
-- **Port Configuration**: Flexible port assignment via environment variables
+- **Port Configuration**: Server runs on port 5000 (0.0.0.0:5000) for development and production
 - **Cross-Origin Support**: Configured for development and production environments
+- **Replit Deployment**: Configured for autoscale deployment using npm start
+
+## Recent Changes
+- **September 19, 2025**: Successfully imported from GitHub and configured for Replit environment
+  - Installed all Node.js dependencies (express, bcryptjs, dotenv, uuid)  
+  - Verified server startup and both landing page and main app functionality
+  - Configured deployment settings for autoscale production deployment
+  - Server running successfully on http://0.0.0.0:5000 with existing user data intact
