@@ -1675,7 +1675,7 @@
                                                                         <div 
                                                                             className="h-3 rounded-full transition-all duration-500"
                                                                             style={{ 
-                                                                                width: `${percentage}%`,
+                                                                                width: `${Math.min(percentage, 100)}%`,
                                                                                 backgroundColor: subject.color 
                                                                             }}
                                                                         ></div>
