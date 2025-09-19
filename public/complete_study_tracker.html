@@ -1577,54 +1577,54 @@
                                         <>
                                             {/* Key Performance Indicators */}
                                             <div className="grid md:grid-cols-4 gap-6 mb-8">
-                                                <div className="bg-primary-dark rounded-xl p-6 text-white border border-white">
+                                                <div className="bg-gray-200 rounded-xl p-6 text-black border border-gray-300">
                                                     <div className="flex items-center gap-3 mb-4">
-                                                        <Clock className="w-8 h-8" />
+                                                        <Clock className="w-8 h-8 text-black" />
                                                         <div>
-                                                            <h3 className="text-lg font-semibold">Total Study Time</h3>
-                                                            <p className="text-white">All subjects</p>
+                                                            <h3 className="text-lg font-semibold text-black">Total Study Time</h3>
+                                                            <p className="text-black">All subjects</p>
                                                         </div>
                                                     </div>
-                                                    <p className="text-3xl font-bold">
+                                                    <p className="text-3xl font-bold text-black">
                                                         {Math.floor(studySessions.reduce((sum, s) => sum + s.duration, 0) / 3600)}h {Math.floor((studySessions.reduce((sum, s) => sum + s.duration, 0) % 3600) / 60)}m
                                                     </p>
                                                 </div>
 
-                                                <div className="bg-primary-dark rounded-xl p-6 text-white border border-white">
+                                                <div className="bg-gray-200 rounded-xl p-6 text-black border border-gray-300">
                                                     <div className="flex items-center gap-3 mb-4">
-                                                        <Calendar className="w-8 h-8" />
+                                                        <Calendar className="w-8 h-8 text-black" />
                                                         <div>
-                                                            <h3 className="text-lg font-semibold">Study Days</h3>
-                                                            <p className="text-white">Unique dates</p>
+                                                            <h3 className="text-lg font-semibold text-black">Study Days</h3>
+                                                            <p className="text-black">Unique dates</p>
                                                         </div>
                                                     </div>
-                                                    <p className="text-3xl font-bold">
+                                                    <p className="text-3xl font-bold text-black">
                                                         {[...new Set(studySessions.map(s => s.date))].length}
                                                     </p>
                                                 </div>
 
-                                                <div className="bg-primary-dark rounded-xl p-6 text-white border border-white">
+                                                <div className="bg-gray-200 rounded-xl p-6 text-black border border-gray-300">
                                                     <div className="flex items-center gap-3 mb-4">
-                                                        <Target className="w-8 h-8" />
+                                                        <Target className="w-8 h-8 text-black" />
                                                         <div>
-                                                            <h3 className="text-lg font-semibold">Average Session</h3>
-                                                            <p className="text-white">Per study</p>
+                                                            <h3 className="text-lg font-semibold text-black">Average Session</h3>
+                                                            <p className="text-black">Per study</p>
                                                         </div>
                                                     </div>
-                                                    <p className="text-3xl font-bold">
+                                                    <p className="text-3xl font-bold text-black">
                                                         {studySessions.length > 0 ? Math.round(studySessions.reduce((sum, s) => sum + s.duration, 0) / studySessions.length / 60) : 0} min
                                                     </p>
                                                 </div>
 
-                                                <div className="bg-primary-dark rounded-xl p-6 text-white border border-white">
+                                                <div className="bg-gray-200 rounded-xl p-6 text-black border border-gray-300">
                                                     <div className="flex items-center gap-3 mb-4">
-                                                        <Activity className="w-8 h-8" />
+                                                        <Activity className="w-8 h-8 text-black" />
                                                         <div>
-                                                            <h3 className="text-lg font-semibold">Study Streak</h3>
-                                                            <p className="text-white">Current days</p>
+                                                            <h3 className="text-lg font-semibold text-black">Study Streak</h3>
+                                                            <p className="text-black">Current days</p>
                                                         </div>
                                                     </div>
-                                                    <p className="text-3xl font-bold">
+                                                    <p className="text-3xl font-bold text-black">
                                                         {(() => {
                                                             const today = new Date().toISOString().split('T')[0];
                                                             const yesterday = new Date(Date.now() - 86400000).toISOString().split('T')[0];
