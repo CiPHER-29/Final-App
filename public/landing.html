@@ -8,7 +8,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.development.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.development.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.23.5/babel.min.js"></script>
-    <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.57.4/dist/umd/supabase.js"></script>
     <style>
         :root {
             --dark-green: #0C120C;
@@ -357,29 +357,43 @@
         const initSupabase = async () => {
             // Wait for window.supabase to be available
             let attempts = 0;
-            while (!window.supabase && attempts < 50) {
-                await new Promise(resolve => setTimeout(resolve, 100));
+            while (!window.supabase && attempts < 100) {
+                await new Promise(resolve => setTimeout(resolve, 50));
                 attempts++;
             }
             
             if (!window.supabase) {
-                console.error('Supabase library failed to load');
+                console.error('Supabase library failed to load after', attempts, 'attempts');
                 return;
             }
             
             try {
+                console.log('Supabase library loaded successfully');
                 const response = await fetch('/api/supabase-config');
                 const config = await response.json();
+                console.log('Supabase config loaded:', { url: config.url, keyLength: config.key.length });
                 supabase = window.supabase.createClient(config.url, config.key);
                 console.log('Supabase client initialized successfully');
+                
+                // Test the connection
+                const { data, error } = await supabase.auth.getSession();
+                if (error) {
+                    console.log('Session check error (normal if not logged in):', error.message);
+                } else {
+                    console.log('Supabase connection test successful');
+                }
             } catch (error) {
                 console.error('Failed to load Supabase config:', error);
                 // Fallback configuration
-                supabase = window.supabase.createClient(
-                    'https://ixpemzhkbewagfjwctlv.supabase.co',
-                    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Iml4cGVtemhrYmV3YWdmandjdGx2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTgyNzA0NjMsImV4cCI6MjA3Mzg0NjQ2M30.Qsqsp1ez82eyKUDMVldEGsHWIzIx1BhvwdQwBZUf_2M'
-                );
-                console.log('Supabase client initialized with fallback config');
+                try {
+                    supabase = window.supabase.createClient(
+                        'https://ixpemzhkbewagfjwctlv.supabase.co',
+                        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Iml4cGVtemhrYmV3YWdmandjdGx2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTgyNzA0NjMsImV4cCI6MjA3Mzg0NjQ2M30.Qsqsp1ez82eyKUDMVldEGsHWIzIx1BhvwdQwBZUf_2M'
+                    );
+                    console.log('Supabase client initialized with fallback config');
+                } catch (fallbackError) {
+                    console.error('Failed to initialize with fallback config:', fallbackError);
+                }
             }
         };
         
