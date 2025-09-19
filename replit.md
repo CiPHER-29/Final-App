@@ -1,8 +1,8 @@
-# Study Tracker
+# Study GPS
 
 ## Overview
 
-Study Tracker is a React-based web application designed to help students monitor and optimize their learning progress. The application enables users to track study sessions, manage subjects, and maintain a timer-based approach to learning with the goal of continuous improvement ("1% better than yesterday"). Built as a science project, it features a modern dark theme interface with comprehensive session tracking and analytics capabilities.
+Study GPS is a React-based web application designed to help students monitor and optimize their learning progress. The application enables users to track study sessions, manage subjects, and maintain a timer-based approach to learning with the goal of continuous improvement ("1% better than yesterday"). Built as a science project, it features a modern dark theme interface with comprehensive session tracking and analytics capabilities.
 
 ## User Preferences
 

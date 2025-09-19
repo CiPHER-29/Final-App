@@ -19,5 +19,14 @@
       "createdAt": "2025-09-19T11:11:42.595Z"
     }
   },
-  "study_sessions": {}
+  "study_sessions": {
+    "9019b017-94e6-45dd-9649-8cc5c5bcd92a": {
+      "id": "9019b017-94e6-45dd-9649-8cc5c5bcd92a",
+      "userId": "736666e3-97a0-48f0-8a12-6e8a2b4e110e",
+      "subjectId": "ddb97176-4708-4c1c-b46a-b8c0d770c582",
+      "duration": 91,
+      "date": "2025-09-19",
+      "timestamp": "2025-09-19T11:13:16.701Z"
+    }
+  }
 }

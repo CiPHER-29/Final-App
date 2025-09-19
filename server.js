@@ -203,6 +203,6 @@ app.get('/app', (req, res) => {
 });
 
 app.listen(port, '0.0.0.0', () => {
-    console.log(`Study Tracker server running on http://0.0.0.0:${port}`);
+    console.log(`Study GPS server running on http://0.0.0.0:${port}`);
     console.log(`Supabase URL: ${process.env.VITE_SUPABASE_URL ? 'Loaded from environment' : 'Using fallback'}`);
 });
